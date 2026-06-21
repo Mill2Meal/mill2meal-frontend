@@ -23,7 +23,7 @@ export default function RefundPolicyPage() {
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold text-gray-900">How to Initiate a Return</h2>
-            <p>Contact our support team via WhatsApp (+91 98765 43210) or email (support@mill2meal.com) with your order ID and photos of the issue. We'll arrange a pickup or guide you through the process.</p>
+            <p>Contact our support team via WhatsApp (+91 90595 03227) or email (2200080216.aids@gmail.com) with your order ID and photos of the issue. We'll arrange a pickup or guide you through the process.</p>
           </section>
         </div>
       </div>

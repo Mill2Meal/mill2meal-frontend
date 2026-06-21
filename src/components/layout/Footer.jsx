@@ -12,7 +12,7 @@ export default function Footer() {
             <p className="text-primary-100 text-sm">Quick ordering for recurring purchases</p>
           </div>
           <a
-            href="https://wa.me/919876543210?text=Hi%20Mill2Meal%2C%20I%20want%20to%20place%20an%20order"
+            href="https://wa.me/919059503227?text=Hi%20Mill2Meal%2C%20I%20want%20to%20place%20an%20order"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white text-primary-700 px-8 py-3 rounded-full font-semibold hover:bg-primary-50 transition shadow-lg"
@@ -78,11 +78,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2 text-sm">
                 <Phone size={16} className="shrink-0 text-primary-400" />
-                <span>+91 98765 43210</span>
+                <span>+91 90595 03227</span>
               </li>
               <li className="flex items-center gap-2 text-sm">
                 <Mail size={16} className="shrink-0 text-primary-400" />
-                <span>hello@mill2meal.com</span>
+                <span>2200080216.aids@gmail.com</span>
               </li>
             </ul>
             <div className="mt-4 p-3 bg-gray-800 rounded-lg">

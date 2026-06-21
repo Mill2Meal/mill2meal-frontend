@@ -1,5 +1,6 @@
 import HeroBanner from '../components/home/HeroBanner'
 import PincodeCheck from '../components/home/PincodeCheck'
+import OffersSection from '../components/home/OffersSection'
 import CategoriesSection from '../components/home/CategoriesSection'
 import BestSellers from '../components/home/BestSellers'
 import MonthlyEssentialsBanner from '../components/home/MonthlyEssentialsBanner'
@@ -12,6 +13,7 @@ export default function HomePage() {
     <div className="pb-16 lg:pb-0">
       <HeroBanner />
       <PincodeCheck />
+      <OffersSection />
       <CategoriesSection />
       <BestSellers />
       <MonthlyEssentialsBanner />

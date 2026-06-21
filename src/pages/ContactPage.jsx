@@ -16,9 +16,9 @@ export default function ContactPage() {
           <div>
             <div className="space-y-6 mb-8">
               {[
-                { icon: Phone, label: 'Call Us', value: '+91 98765 43210', subtext: 'Mon-Sat, 9 AM - 7 PM' },
-                { icon: Mail, label: 'Email', value: 'hello@mill2meal.com', subtext: 'We reply within 24 hours' },
-                { icon: MessageCircle, label: 'WhatsApp', value: '+91 98765 43210', subtext: 'Quick responses' },
+                { icon: Phone, label: 'Call Us', value: '+91 90595 03227', subtext: 'Mon-Sat, 9 AM - 7 PM' },
+                { icon: Mail, label: 'Email', value: '2200080216.aids@gmail.com', subtext: 'We reply within 24 hours' },
+                { icon: MessageCircle, label: 'WhatsApp', value: '+91 90595 03227', subtext: 'Quick responses' },
                 { icon: MapPin, label: 'Head Office', value: 'Plot 45, Hitech City Main Road, Madhapur, Hyderabad - 500081', subtext: '' },
               ].map(item => (
                 <div key={item.label} className="flex items-start gap-4 p-4 bg-white rounded-xl border border-gray-100">

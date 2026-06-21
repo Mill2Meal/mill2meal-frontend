@@ -1,17 +1,41 @@
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Home, Grid3X3, ShoppingCart, User, Heart } from 'lucide-react'
+import { Home, Grid3X3, ShoppingCart, User, Heart, Bell } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
+import { api } from '../../lib/api'
 
 export default function MobileBottomNav() {
   const location = useLocation()
   const { cartCount } = useCart()
 
+  const isLoggedIn = !!localStorage.getItem('accessToken')
+  const [unreadCount, setUnreadCount] = useState(0)
+
+  useEffect(() => {
+    if (!isLoggedIn) return
+    async function fetchUnread() {
+      try {
+        const countData = await api.notifications.unreadCount()
+        setUnreadCount(countData.count || 0)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchUnread()
+    const interval = setInterval(fetchUnread, 30000)
+    return () => clearInterval(interval)
+  }, [isLoggedIn])
+
   const navItems = [
     { icon: Home, label: 'Home', path: '/' },
     { icon: Grid3X3, label: 'Categories', path: '/category/rice-millets' },
     { icon: ShoppingCart, label: 'Cart', path: '/cart', badge: cartCount },
-    { icon: Heart, label: 'Subscriptions', path: '/subscriptions' },
-    { icon: User, label: 'Account', path: '/account' },
+    isLoggedIn 
+      ? { icon: Bell, label: 'Notifications', path: '/account/notifications', badge: unreadCount }
+      : { icon: Heart, label: 'Subscriptions', path: '/subscriptions' },
+    isLoggedIn 
+      ? { icon: User, label: 'Account', path: '/account' }
+      : { icon: User, label: 'Login', path: '/login' },
   ]
 
   return (

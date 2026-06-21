@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import Layout from './components/layout/Layout'
 import HomePage from './pages/HomePage'
@@ -23,11 +24,27 @@ import TermsPage from './pages/TermsPage'
 import RefundPolicyPage from './pages/RefundPolicyPage'
 import ShippingPolicyPage from './pages/ShippingPolicyPage'
 import SearchResultsPage from './pages/SearchResultsPage'
+import LoginPage from './pages/LoginPage'
+import AddressesPage from './pages/AddressesPage'
+import PaymentMethodsPage from './pages/PaymentMethodsPage'
+import NotificationsPage from './pages/NotificationsPage'
+import OffersPage from './pages/OffersPage'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
 
 function App() {
   return (
     <CartProvider>
       <Router>
+        <ScrollToTop />
         <Layout>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -36,10 +53,14 @@ function App() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/account" element={<AccountPage />} />
+            <Route path="/account/addresses" element={<AddressesPage />} />
+            <Route path="/account/payment-methods" element={<PaymentMethodsPage />} />
+            <Route path="/account/notifications" element={<NotificationsPage />} />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/orders/:id" element={<OrderTrackingPage />} />
             <Route path="/subscriptions" element={<SubscriptionsPage />} />
             <Route path="/monthly-essentials" element={<MonthlyEssentialsPage />} />
+            <Route path="/offers" element={<OffersPage />} />
             <Route path="/stores" element={<StoreLocatorPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
@@ -52,6 +73,7 @@ function App() {
             <Route path="/refund-policy" element={<RefundPolicyPage />} />
             <Route path="/shipping-policy" element={<ShippingPolicyPage />} />
             <Route path="/search" element={<SearchResultsPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </Layout>
       </Router>

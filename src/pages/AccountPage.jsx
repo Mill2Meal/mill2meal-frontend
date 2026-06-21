@@ -1,14 +1,60 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { User, MapPin, Package, Heart, CreditCard, Bell, LogOut, ChevronRight } from 'lucide-react'
+import { api } from '../lib/api'
+import { useCart } from '../context/CartContext'
 
 export default function AccountPage() {
+  const [profile, setProfile] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
+  const { fetchCart } = useCart()
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken')
+    if (!token) {
+      navigate('/login?redirect=/account')
+      return
+    }
+
+    async function loadProfile() {
+      try {
+        const data = await api.customers.me()
+        setProfile(data)
+      } catch (err) {
+        console.error('Failed to load profile:', err)
+        // If unauthorized or error, clear tokens and redirect to login
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('currentUser')
+        navigate('/login?redirect=/account')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadProfile()
+  }, [navigate])
+
+  const handleLogout = async () => {
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('currentUser')
+    await fetchCart()
+    navigate('/')
+  }
+
   const menuItems = [
     { icon: Package, label: 'My Orders', description: 'Track, return or reorder', link: '/orders' },
-    { icon: MapPin, label: 'Saved Addresses', description: 'Manage delivery addresses', link: '#' },
+    { icon: MapPin, label: 'Saved Addresses', description: 'Manage delivery addresses', link: '/account/addresses' },
     { icon: Heart, label: 'Subscriptions', description: 'Manage your subscriptions', link: '/subscriptions' },
-    { icon: CreditCard, label: 'Payment Methods', description: 'Saved cards and UPI', link: '#' },
-    { icon: Bell, label: 'Notifications', description: 'Order updates and offers', link: '#' },
+    { icon: CreditCard, label: 'Payment Methods', description: 'Saved cards and UPI', link: '/account/payment-methods' },
+    { icon: Bell, label: 'Notifications', description: 'Order updates and offers', link: '/account/notifications' },
   ]
+
+  if (loading) {
+    return <div className="py-20 text-center text-gray-500 font-semibold">Loading profile...</div>
+  }
 
   return (
     <div className="pb-20 lg:pb-0 bg-gray-50 min-h-screen">
@@ -20,10 +66,12 @@ export default function AccountPage() {
               <User size={32} className="text-primary-600" />
             </div>
             <div>
-              <h1 className="text-xl font-heading font-bold text-gray-900">Welcome Back!</h1>
-              <p className="text-gray-500 text-sm">+91 98765 43210</p>
+              <h1 className="text-xl font-heading font-bold text-gray-900">
+                {profile?.fullName || 'Welcome Back!'}
+              </h1>
+              <p className="text-gray-500 text-sm">{profile?.mobileNumber ? `+91 ${profile.mobileNumber}` : ''}</p>
+              {profile?.email && <p className="text-gray-400 text-xs mt-0.5">{profile.email}</p>}
             </div>
-            <button className="ml-auto text-sm text-primary-600 font-medium hover:underline">Edit Profile</button>
           </div>
         </div>
 
@@ -57,7 +105,10 @@ export default function AccountPage() {
           </div>
         </div>
 
-        <button className="mt-6 flex items-center gap-2 text-red-500 font-medium hover:text-red-600 transition">
+        <button 
+          onClick={handleLogout}
+          className="mt-6 flex items-center gap-2 text-red-500 font-medium hover:text-red-600 transition"
+        >
           <LogOut size={18} /> Logout
         </button>
       </div>

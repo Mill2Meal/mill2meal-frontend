@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold text-gray-900">Contact</h2>
-            <p>For privacy-related queries, contact us at privacy@mill2meal.com or call +91 98765 43210.</p>
+            <p>For privacy-related queries, contact us at 2200080216.aids@gmail.com or call +91 90595 03227.</p>
           </section>
         </div>
       </div>
