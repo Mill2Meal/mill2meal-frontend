@@ -4,7 +4,9 @@ import { api } from '../lib/api'
 import { useCart } from '../context/CartContext'
 
 export default function LoginPage() {
+  const [loginMethod, setLoginMethod] = useState('mobile') // 'mobile' | 'email'
   const [mobileNumber, setMobileNumber] = useState('')
+  const [email, setEmail] = useState('')
   const [fullName, setFullName] = useState('')
   const [otp, setOtp] = useState('')
   const [requestId, setRequestId] = useState('')
@@ -27,21 +29,40 @@ export default function LoginPage() {
   }, [timer])
 
   async function handleRequestOtp() {
-    if (!/^\d{10}$/.test(mobileNumber)) {
-      setError('Please enter a valid 10-digit mobile number')
-      return
-    }
-    setLoading(true)
-    setError('')
-    try {
-      const data = await api.auth.requestOtp(mobileNumber)
-      setRequestId(data.requestId)
-      setStep('verify')
-      setTimer(30)
-    } catch (e) {
-      setError(e.message || 'Failed to request OTP')
-    } finally {
-      setLoading(false)
+    if (loginMethod === 'mobile') {
+      if (!/^\d{10}$/.test(mobileNumber)) {
+        setError('Please enter a valid 10-digit mobile number')
+        return
+      }
+      setLoading(true)
+      setError('')
+      try {
+        const data = await api.auth.requestOtp(mobileNumber)
+        setRequestId(data.requestId)
+        setStep('verify')
+        setTimer(30)
+      } catch (e) {
+        setError(e.message || 'Failed to request OTP')
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
+        setError('Please enter a valid email address')
+        return
+      }
+      setLoading(true)
+      setError('')
+      try {
+        const data = await api.auth.requestEmailOtp(email)
+        setRequestId(data.requestId)
+        setStep('verify')
+        setTimer(30)
+      } catch (e) {
+        setError(e.message || 'Failed to request OTP')
+      } finally {
+        setLoading(false)
+      }
     }
   }
 
@@ -49,8 +70,13 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
     try {
-      const data = await api.auth.resendOtp(mobileNumber, 'login')
-      setRequestId(data.requestId)
+      if (loginMethod === 'mobile') {
+        const data = await api.auth.resendOtp(mobileNumber, 'login')
+        setRequestId(data.requestId)
+      } else {
+        const data = await api.auth.requestEmailOtp(email)
+        setRequestId(data.requestId)
+      }
       setTimer(30)
     } catch (e) {
       setError(e.message || 'Failed to resend OTP')
@@ -61,13 +87,15 @@ export default function LoginPage() {
 
   async function handleVerifyOtp() {
     if (!otp) {
-      setError('Please enter the OTP sent to your phone')
+      setError('Please enter the OTP sent to you')
       return
     }
     setLoading(true)
     setError('')
     try {
-      const data = await api.auth.verifyOtp(requestId, otp)
+      const data = (loginMethod === 'mobile')
+        ? await api.auth.verifyOtp(requestId, otp)
+        : await api.auth.verifyEmailOtp(email, otp)
       
       if (data.verified) {
         setStep('register')
@@ -101,6 +129,7 @@ export default function LoginPage() {
       const data = await api.auth.register({
         fullName,
         mobileNumber,
+        email: email || undefined,
       })
       localStorage.setItem('accessToken', data.accessToken)
       localStorage.setItem('refreshToken', data.refreshToken)
@@ -127,8 +156,8 @@ export default function LoginPage() {
             {step === 'register' ? 'Complete Profile' : 'Welcome to Mill2Meal'}
           </h2>
           <p className="text-gray-500 mt-2 text-sm">
-            {step === 'request' && 'Enter your mobile number to login or register'}
-            {step === 'verify' && `Enter the OTP sent to +91 ${mobileNumber}`}
+            {step === 'request' && `Enter your ${loginMethod === 'mobile' ? 'mobile number' : 'email address'} to login or register`}
+            {step === 'verify' && `Enter the OTP sent to ${loginMethod === 'mobile' ? `+91 ${mobileNumber}` : email}`}
             {step === 'register' && 'Help us know you better to complete setup'}
           </p>
         </div>
@@ -141,20 +170,58 @@ export default function LoginPage() {
 
         {step === 'request' && (
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number</label>
-              <div className="flex gap-2">
-                <span className="bg-gray-100 border border-gray-300 rounded-lg px-3 py-3 text-gray-600 font-medium flex items-center justify-center">+91</span>
+            <div className="flex bg-gray-100 p-1 rounded-xl border border-gray-200 mb-2">
+              <button
+                type="button"
+                onClick={() => { setLoginMethod('mobile'); setError(''); }}
+                className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${
+                  loginMethod === 'mobile'
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-500 hover:text-gray-800'
+                }`}
+              >
+                Mobile Number
+              </button>
+              <button
+                type="button"
+                onClick={() => { setLoginMethod('email'); setError(''); }}
+                className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${
+                  loginMethod === 'email'
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-500 hover:text-gray-800'
+                }`}
+              >
+                Email Address
+              </button>
+            </div>
+
+            {loginMethod === 'mobile' ? (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number</label>
+                <div className="flex gap-2">
+                  <span className="bg-gray-100 border border-gray-300 rounded-lg px-3 py-3 text-gray-600 font-medium flex items-center justify-center">+91</span>
+                  <input
+                    type="tel"
+                    maxLength={10}
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, ''))}
+                    placeholder="Enter 10-digit number"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition font-medium"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
                 <input
-                  type="tel"
-                  maxLength={10}
-                  value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, ''))}
-                  placeholder="Enter 10-digit number"
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition font-medium"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email address"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition font-medium"
                 />
               </div>
-            </div>
+            )}
 
             <button
               onClick={handleRequestOtp}
@@ -202,7 +269,7 @@ export default function LoginPage() {
               onClick={() => setStep('request')}
               className="w-full text-center text-sm font-semibold text-gray-500 hover:text-gray-700 transition mt-2 block"
             >
-              Change Mobile Number
+              Change {loginMethod === 'mobile' ? 'Mobile Number' : 'Email Address'}
             </button>
           </div>
         )}

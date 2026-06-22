@@ -78,6 +78,16 @@ export const api = {
         method: 'POST',
         body: JSON.stringify({ mobileNumber, intent }),
       }),
+    requestEmailOtp: (email) =>
+      apiFetch('/auth/email/request-otp', {
+        method: 'POST',
+        body: JSON.stringify({ email, intent: 'login' }),
+      }),
+    verifyEmailOtp: (email, otp) =>
+      apiFetch('/auth/email/verify-otp', {
+        method: 'POST',
+        body: JSON.stringify({ email, otp }),
+      }),
     me: () => apiFetch('/auth/me'),
     register: (payload) =>
       apiFetch('/auth/register', {

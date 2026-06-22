@@ -5,7 +5,7 @@ export default function HeroBanner() {
   return (
     <section 
       className="relative overflow-hidden bg-cover bg-center min-h-[450px] md:min-h-[550px] lg:min-h-[600px] flex items-center"
-      style={{ backgroundImage: `url('/hero_background.png')` }}
+      style={{ backgroundImage: `url('${import.meta.env.BASE_URL}hero_background.png')` }}
     >
       {/* Dark overlay for readability */}
       <div className="absolute inset-0 bg-black/55 z-0" />
