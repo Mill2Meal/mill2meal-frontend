@@ -1,9 +1,9 @@
-const API_BASE = 'http://localhost:4001/api/v1';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4001/api/v1';
 
 export function getAbsoluteImageUrl(url) {
   if (!url) return 'https://placehold.co/600x400?text=No+Image';
   if (url.startsWith('http')) return url;
-  const baseUrl = 'http://localhost:4001';
+  const baseUrl = import.meta.env.VITE_API_URL_ROOT || 'http://localhost:4001';
   return url.startsWith('/') ? `${baseUrl}${url}` : `${baseUrl}/${url}`;
 }
 
