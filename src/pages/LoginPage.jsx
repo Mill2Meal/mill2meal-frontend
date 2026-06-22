@@ -18,7 +18,12 @@ export default function LoginPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { fetchCart } = useCart()
-  const redirect = searchParams.get('redirect') || '/account'
+  const rawRedirect = searchParams.get('redirect') || '/account';
+  const base = import.meta.env.BASE_URL || '/';
+  const cleanBase = base.endsWith('/') ? base.slice(0, -1) : base;
+  const redirect = (cleanBase && cleanBase !== '/' && rawRedirect.startsWith(cleanBase))
+    ? (rawRedirect.slice(cleanBase.length) || '/')
+    : rawRedirect;
 
   useEffect(() => {
     let interval

@@ -42,8 +42,10 @@ export async function apiFetch(path, options = {}) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       // Redirect to login page if we fail auth
-      if (window.location.pathname !== '/login') {
-        window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+      const base = import.meta.env.BASE_URL || '/';
+      const loginPath = (base.endsWith('/') ? base : base + '/') + 'login';
+      if (window.location.pathname !== loginPath) {
+        window.location.href = loginPath + '?redirect=' + encodeURIComponent(window.location.pathname);
       }
     }
     throw new ApiError(
