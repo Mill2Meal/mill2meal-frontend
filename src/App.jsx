@@ -43,7 +43,7 @@ function ScrollToTop() {
 function App() {
   return (
     <CartProvider>
-      <Router>
+      <Router basename="/mill2meal-frontend">
         <ScrollToTop />
         <Layout>
           <Routes>
