@@ -114,7 +114,6 @@ export default function AddressesPage() {
     try {
       const payload = {
         ...formData,
-        serviceabilityStatus: 'SERVICEABLE' // default status for zone lookups
       }
 
       if (editingAddress) {

@@ -155,8 +155,7 @@ export default function MonthlyEssentialsPage() {
 
     try {
       const addedAddress = await api.addresses.create({
-        ...newAddress,
-        serviceabilityStatus: 'SERVICEABLE' // assume Hyderabad locations are serviceable
+        ...newAddress
       })
       
       const refreshedData = await api.addresses.list()
@@ -838,4 +837,3 @@ export default function MonthlyEssentialsPage() {
     </div>
   )
 }
-

@@ -20,6 +20,26 @@ function getAccessToken() {
   return localStorage.getItem('accessToken');
 }
 
+function normalizeAddressPayload(payload = {}) {
+  const normalized = {
+    addressLabel: payload.addressLabel,
+    recipientName: payload.recipientName ?? payload.fullName,
+    recipientMobile: payload.recipientMobile ?? payload.mobileNumber,
+    line1: payload.line1,
+    line2: payload.line2,
+    landmark: payload.landmark,
+    city: payload.city,
+    state: payload.state,
+    pincode: payload.pincode,
+    addressType: payload.addressType ? String(payload.addressType).toUpperCase() : undefined,
+    isDefault: payload.isDefault,
+  };
+
+  return Object.fromEntries(
+    Object.entries(normalized).filter(([, value]) => value !== undefined),
+  );
+}
+
 export async function apiFetch(path, options = {}) {
   const token = getAccessToken();
   const headers = {
@@ -251,12 +271,12 @@ export const api = {
     create: (payload) =>
       apiFetch('/addresses', {
         method: 'POST',
-        body: JSON.stringify(payload),
+        body: JSON.stringify(normalizeAddressPayload(payload)),
       }),
     update: (id, payload) =>
       apiFetch(`/addresses/${id}`, {
         method: 'PATCH',
-        body: JSON.stringify(payload),
+        body: JSON.stringify(normalizeAddressPayload(payload)),
       }),
     remove: (id) =>
       apiFetch(`/addresses/${id}`, { method: 'DELETE' }),

@@ -21,14 +21,15 @@ export default function CheckoutPage() {
   // New Address Form State
   const [showNewAddressForm, setShowNewAddressForm] = useState(false)
   const [newAddress, setNewAddress] = useState({
-    fullName: '',
-    mobileNumber: '',
+    recipientName: '',
+    recipientMobile: '',
     line1: '',
     line2: '',
     city: '',
     state: '',
     pincode: '',
     addressLabel: 'Home',
+    addressType: 'HOME',
     isDefault: false
   })
 
@@ -108,7 +109,7 @@ export default function CheckoutPage() {
 
   const handleAddAddress = async (e) => {
     e.preventDefault()
-    if (!newAddress.fullName || !newAddress.mobileNumber || !newAddress.line1 || !newAddress.city || !newAddress.state || !newAddress.pincode) {
+    if (!newAddress.recipientName || !newAddress.recipientMobile || !newAddress.line1 || !newAddress.city || !newAddress.state || !newAddress.pincode) {
       setError('Please fill in all required address fields')
       return
     }
@@ -121,14 +122,15 @@ export default function CheckoutPage() {
       setShowNewAddressForm(false)
       // Reset form
       setNewAddress({
-        fullName: '',
-        mobileNumber: '',
+        recipientName: '',
+        recipientMobile: '',
         line1: '',
         line2: '',
         city: '',
         state: '',
         pincode: '',
         addressLabel: 'Home',
+        addressType: 'HOME',
         isDefault: false
       })
     } catch (err) {
@@ -301,10 +303,10 @@ export default function CheckoutPage() {
                             />
                             <div className="flex-1 text-sm text-gray-700">
                               <div className="flex items-center gap-2 mb-1">
-                                <span className="font-bold text-gray-900">{addr.fullName}</span>
+                                <span className="font-bold text-gray-900">{addr.recipientName}</span>
                                 <span className="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded uppercase font-medium">{addr.addressLabel}</span>
                               </div>
-                              <p className="font-medium text-gray-600">{addr.mobileNumber}</p>
+                              <p className="font-medium text-gray-600">{addr.recipientMobile}</p>
                               <p className="mt-1 text-gray-500 leading-relaxed">{addr.line1}, {addr.line2 ? `${addr.line2}, ` : ''}{addr.city}, {addr.state} - {addr.pincode}</p>
                             </div>
                           </label>
@@ -331,8 +333,8 @@ export default function CheckoutPage() {
                           <input
                             type="text"
                             required
-                            value={newAddress.fullName}
-                            onChange={(e) => setNewAddress(prev => ({ ...prev, fullName: e.target.value }))}
+                            value={newAddress.recipientName}
+                            onChange={(e) => setNewAddress(prev => ({ ...prev, recipientName: e.target.value }))}
                             className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-primary-500"
                             placeholder="Full name"
                           />
@@ -343,8 +345,8 @@ export default function CheckoutPage() {
                             type="tel"
                             required
                             maxLength={10}
-                            value={newAddress.mobileNumber}
-                            onChange={(e) => setNewAddress(prev => ({ ...prev, mobileNumber: e.target.value.replace(/\D/g, '') }))}
+                            value={newAddress.recipientMobile}
+                            onChange={(e) => setNewAddress(prev => ({ ...prev, recipientMobile: e.target.value.replace(/\D/g, '') }))}
                             className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-primary-500"
                             placeholder="10-digit number"
                           />
@@ -413,7 +415,7 @@ export default function CheckoutPage() {
                           <button
                             key={label}
                             type="button"
-                            onClick={() => setNewAddress(prev => ({ ...prev, addressLabel: label }))}
+                            onClick={() => setNewAddress(prev => ({ ...prev, addressLabel: label, addressType: label.toUpperCase() }))}
                             className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition ${newAddress.addressLabel === label ? 'border-primary-600 bg-primary-50 text-primary-700' : 'border-gray-200 text-gray-600 hover:bg-gray-50'}`}
                           >
                             {label}
@@ -453,7 +455,7 @@ export default function CheckoutPage() {
                   </div>
                   {selectedAddress && (
                     <div className="text-sm text-gray-600 bg-gray-50 p-4 rounded-xl">
-                      <p className="font-bold text-gray-800">{selectedAddress.fullName} (+91 {selectedAddress.mobileNumber})</p>
+                      <p className="font-bold text-gray-800">{selectedAddress.recipientName} (+91 {selectedAddress.recipientMobile})</p>
                       <p className="mt-1">{selectedAddress.line1}, {selectedAddress.line2 ? `${selectedAddress.line2}, ` : ''}{selectedAddress.city}, {selectedAddress.state} - {selectedAddress.pincode}</p>
                     </div>
                   )}
