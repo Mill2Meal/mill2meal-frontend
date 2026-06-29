@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { Star, Plus } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
-import { getAbsoluteImageUrl } from '../../lib/api'
+import { getAbsoluteImageUrl, resolveProductImage } from '../../lib/api'
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart()
@@ -9,7 +9,7 @@ export default function ProductCard({ product }) {
 
   const id = product.productId || product.id
   const name = product.productName || product.name
-  const imageUrl = getAbsoluteImageUrl(product.primaryImageUrl || product.image || product.productImages?.[0]?.imageUrl)
+  const imageUrl = resolveProductImage(product)
   const unit = product.packSize ? `${product.packSize} ${product.unitOfMeasure || ''}` : (product.unit || '1 Unit')
   const price = parseFloat(product.salePrice || product.price)
   const originalPrice = parseFloat(product.mrp || product.originalPrice || price)

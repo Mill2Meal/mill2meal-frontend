@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { MapPin, Clock, Phone, Navigation, Loader2, ArrowLeft, CheckCircle2, ShoppingBag, MessageSquare } from 'lucide-react'
-import { api, getAbsoluteImageUrl } from '../lib/api'
+import { api, getAbsoluteImageUrl, resolveProductImage } from '../lib/api'
 import { useNavigate, Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 
@@ -233,7 +233,7 @@ export default function StoreLocatorPage() {
                         return (
                           <div key={prod.productId} className="flex gap-4 p-4 border border-gray-100 rounded-xl hover:shadow-sm transition">
                             <img
-                              src={getAbsoluteImageUrl(prod.primaryImageUrl || prod.productImages?.[0]?.imageUrl)}
+                              src={resolveProductImage(prod)}
                               alt={prod.productName}
                               className="w-20 h-20 object-cover rounded-lg border border-gray-100 shrink-0"
                             />

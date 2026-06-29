@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { Star, Minus, Plus, ShoppingCart, Heart, Truck, Shield, RotateCcw, Leaf, Loader2 } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import ProductCard from '../components/common/ProductCard'
-import { api, getAbsoluteImageUrl } from '../lib/api'
+import { api, getAbsoluteImageUrl, resolveProductImage } from '../lib/api'
 
 export default function ProductDetailPage() {
   const { id } = useParams()
@@ -75,9 +75,15 @@ export default function ProductDetailPage() {
   const storage = product.storageInstructions || 'Store in a cool, dry place'
   
   // Images mapping
-  const images = product.productImages && product.productImages.length > 0
-    ? product.productImages.map(img => getAbsoluteImageUrl(img.imageUrl))
-    : [getAbsoluteImageUrl(product.primaryImageUrl)]
+  let images = []
+  if (product.productImages && product.productImages.length > 0) {
+    images = product.productImages
+      .filter(img => img.isActive !== false)
+      .map(img => getAbsoluteImageUrl(img.imageUrl))
+  }
+  if (images.length === 0) {
+    images = [resolveProductImage(product)]
+  }
 
   // Variants mapping (since backend might not support variants directly, we treat the packSize as standard variant)
   const variants = [packSize]

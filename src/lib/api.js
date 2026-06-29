@@ -3,8 +3,35 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4001/api/v1';
 export function getAbsoluteImageUrl(url) {
   if (!url) return 'https://placehold.co/600x400?text=No+Image';
   if (url.startsWith('http')) return url;
-  const baseUrl = import.meta.env.VITE_API_URL_ROOT || 'http://localhost:4001';
+  const baseUrl = import.meta.env.VITE_API_URL_ROOT ||
+                  import.meta.env.VITE_API_URL?.replace(/\/api\/v1\/?$/, '') ||
+                  'http://localhost:4001';
   return url.startsWith('/') ? `${baseUrl}${url}` : `${baseUrl}/${url}`;
+}
+
+export function resolveProductImage(product) {
+  if (!product) return 'https://placehold.co/600x400?text=No+Image';
+  
+  // 1. primaryImageUrl
+  if (product.primaryImageUrl) {
+    return getAbsoluteImageUrl(product.primaryImageUrl);
+  }
+  
+  // 2. first active image in productImages
+  if (product.productImages && product.productImages.length > 0) {
+    const activeImage = product.productImages.find(img => img.isActive !== false);
+    if (activeImage) {
+      return getAbsoluteImageUrl(activeImage.imageUrl);
+    }
+  }
+  
+  // 3. Fallback to product.image (for mock data compatibility)
+  if (product.image) {
+    return getAbsoluteImageUrl(product.image);
+  }
+
+  // 4. placeholder
+  return 'https://placehold.co/600x400?text=No+Image';
 }
 
 export class ApiError extends Error {

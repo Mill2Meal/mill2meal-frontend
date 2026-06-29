@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { api, getAbsoluteImageUrl } from '../lib/api'
+import { api, getAbsoluteImageUrl, resolveProductImage } from '../lib/api'
 
 const CartContext = createContext()
 
@@ -44,7 +44,7 @@ export function CartProvider({ children }) {
                 variant: item.skuSnapshot || p.packSize || 'Standard',
                 price: parseFloat(item.unitPrice),
                 quantity: item.quantity,
-                image: getAbsoluteImageUrl(p.primaryImageUrl || p.productImages?.[0]?.imageUrl),
+                image: resolveProductImage(p),
                 slug: p.slug
               }
             } catch (err) {
@@ -143,7 +143,7 @@ export function CartProvider({ children }) {
             variant: variant || product.packSize || 'Standard',
             price: parseFloat(product.salePrice || product.price),
             quantity,
-            image: getAbsoluteImageUrl(product.primaryImageUrl || product.image || product.productImages?.[0]?.imageUrl),
+            image: resolveProductImage(product),
             slug: product.slug
           }]
         }
