@@ -9,7 +9,7 @@ const faqs = [
   { q: 'How do subscriptions work?', a: 'Choose a subscription plan (Rice, Dal, Oil, or Snack box). Your selected items will be delivered monthly on your preferred date. You can pause, modify, or cancel anytime from your account.' },
   { q: 'Are your products organic?', a: 'We offer both organic and conventional options. Products labeled "Organic" are certified by authorized bodies. All our products, organic or not, are free from artificial additives and preservatives.' },
   { q: 'What payment methods do you accept?', a: 'We accept UPI (GPay, PhonePe, Paytm), credit/debit cards, net banking, and cash on delivery (COD). All online payments are secured with SSL encryption.' },
-  { q: 'Do you offer bulk orders?', a: 'Yes! We cater to restaurants, caterers, hostels, and offices. Bulk orders get special pricing. Contact us at bulk@mill2meal.com or visit our Bulk Orders page for more details.' },
+  { q: 'Do you offer bulk orders?', a: 'Yes! We cater to restaurants, caterers, hostels, and offices. Bulk orders get special pricing. Contact us at bulk@milltomeal.com or visit our Bulk Orders page for more details.' },
 ]
 
 export default function FaqPage() {

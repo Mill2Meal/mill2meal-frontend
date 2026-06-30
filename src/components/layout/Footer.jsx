@@ -12,7 +12,7 @@ export default function Footer() {
             <p className="text-primary-100 text-sm">Quick ordering for recurring purchases</p>
           </div>
           <a
-            href="https://wa.me/919059503227?text=Hi%20Mill2Meal%2C%20I%20want%20to%20place%20an%20order"
+            href="https://wa.me/919059503227?text=Hi%20MillToMeal%2C%20I%20want%20to%20place%20an%20order"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white text-primary-700 px-8 py-3 rounded-full font-semibold hover:bg-primary-50 transition shadow-lg"
@@ -28,8 +28,12 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="Mill2Meal Logo" className="w-10 h-10 rounded-xl object-cover shadow-md" />
-              <span className="text-xl font-heading font-bold text-white">Mill2Meal</span>
+              <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="MillToMeal Logo" className="w-10 h-10 rounded-xl object-cover shadow-md" />
+              <span className="text-xl font-logo font-bold">
+                <span className="text-[#CE2028]">MILL</span>
+                <span className="text-white">To</span>
+                <span className="text-[#CE2028]">MEAL</span>
+              </span>
             </Link>
             <p className="text-sm text-gray-400 mb-4 leading-relaxed">
               Premium quality grains, pulses, oils and spices delivered fresh from the mill to your table. Trusted by 50,000+ families.
@@ -94,7 +98,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
         <div className="container-custom py-4 flex flex-col md:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-gray-500">&copy; 2024 Mill2Meal. All rights reserved.</p>
+          <p className="text-xs text-gray-500">&copy; 2024 MillToMeal. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/100px-Visa_Inc._logo.svg.png" alt="Visa" className="h-5 opacity-60" />
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/100px-Mastercard-logo.svg.png" alt="Mastercard" className="h-5 opacity-60" />

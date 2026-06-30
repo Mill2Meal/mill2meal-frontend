@@ -51,7 +51,7 @@ export default function MobileBottomNav() {
             >
               <item.icon size={22} />
               {item.badge > 0 && (
-                <span className="absolute -top-1 right-0 w-4 h-4 bg-secondary-500 text-white text-[10px] rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-1 right-0 w-4 h-4 bg-[#CE2028] text-white text-[10px] rounded-full flex items-center justify-center font-bold">
                   {item.badge}
                 </span>
               )}

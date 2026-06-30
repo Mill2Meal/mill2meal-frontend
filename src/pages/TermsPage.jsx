@@ -11,7 +11,7 @@ export default function TermsPage() {
         <div className="space-y-6 text-gray-600 leading-relaxed">
           <section>
             <h2 className="text-xl font-heading font-bold text-gray-900">Acceptance of Terms</h2>
-            <p>By accessing and using the Mill2Meal website, you agree to be bound by these Terms and Conditions. If you disagree with any part, please do not use our service.</p>
+            <p>By accessing and using the MillToMeal website, you agree to be bound by these Terms and Conditions. If you disagree with any part, please do not use our service.</p>
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold text-gray-900">Orders & Pricing</h2>
@@ -23,11 +23,11 @@ export default function TermsPage() {
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold text-gray-900">Intellectual Property</h2>
-            <p>All content on this website including logos, images, text, and design elements are property of Mill2Meal and protected by intellectual property laws.</p>
+            <p>All content on this website including logos, images, text, and design elements are property of MillToMeal and protected by intellectual property laws.</p>
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold text-gray-900">Limitation of Liability</h2>
-            <p>Mill2Meal shall not be liable for any indirect, incidental, or consequential damages arising from the use of our products or services beyond the order value.</p>
+            <p>MillToMeal shall not be liable for any indirect, incidental, or consequential damages arising from the use of our products or services beyond the order value.</p>
           </section>
         </div>
       </div>

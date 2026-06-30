@@ -14,7 +14,7 @@ export default function WhyChooseUs() {
     <section className="py-12 md:py-16 bg-white">
       <div className="container-custom">
         <div className="text-center mb-10">
-          <h2 className="section-title">Why Choose Mill2Meal?</h2>
+          <h2 className="section-title">Why Choose MillToMeal?</h2>
           <p className="section-subtitle">Your trust is our foundation</p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">

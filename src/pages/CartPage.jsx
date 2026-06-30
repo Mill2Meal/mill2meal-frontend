@@ -45,8 +45,8 @@ export default function CartPage() {
 
   const recommendedCategories = [
     { name: 'Rice & Millets', slug: 'rice-millets', bg: 'bg-primary-50 hover:bg-primary-100/80 text-primary-800' },
-    { name: 'Dals & Pulses', slug: 'dals-pulses', bg: 'bg-secondary-50 hover:bg-secondary-100/80 text-secondary-800' },
-    { name: 'Cooking Oils', slug: 'cooking-oils', bg: 'bg-amber-50 hover:bg-amber-100/80 text-amber-800' },
+    { name: 'Dals & Pulses', slug: 'dals-pulses', bg: 'bg-red-50 hover:bg-red-100/80 text-[#CE2028]' },
+    { name: 'Cooking Oils', slug: 'cooking-oils', bg: 'bg-rose-50 hover:bg-rose-100/80 text-[#CE2028]' },
     { name: 'Spices & Masalas', slug: 'spices-masalas', bg: 'bg-red-50 hover:bg-red-100/80 text-red-800' }
   ]
 
@@ -91,7 +91,7 @@ export default function CartPage() {
           {/* Cart Items List */}
           <div className="lg:col-span-2 space-y-4">
             {/* Complete Your Basket Upsell */}
-            <div className="bg-gradient-to-r from-secondary-500/10 to-primary-500/10 border border-primary-200/50 p-4 rounded-2xl flex items-center justify-between gap-4">
+            <div className="bg-gradient-to-r from-[#CE2028]/10 to-[#E63B44]/10 border border-red-200/50 p-4 rounded-2xl flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-primary-100 text-primary-700 rounded-xl flex items-center justify-center shrink-0">
                   <Sparkles size={20} />

@@ -158,7 +158,7 @@ export default function LoginPage() {
             <span className="text-white font-bold text-xl">M</span>
           </div>
           <h2 className="text-2xl font-heading font-bold text-gray-900">
-            {step === 'register' ? 'Complete Profile' : 'Welcome to Mill2Meal'}
+            {step === 'register' ? 'Complete Profile' : 'Welcome to MillToMeal'}
           </h2>
           <p className="text-gray-500 mt-2 text-sm">
             {step === 'request' && `Enter your ${loginMethod === 'mobile' ? 'mobile number' : 'email address'} to login or register`}

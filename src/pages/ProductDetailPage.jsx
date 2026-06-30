@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Star, Minus, Plus, ShoppingCart, Heart, Truck, Shield, RotateCcw, Leaf, Loader2 } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import ProductCard from '../components/common/ProductCard'
 import { api, getAbsoluteImageUrl, resolveProductImage } from '../lib/api'
 
 export default function ProductDetailPage() {
   const { id } = useParams()
   const { addToCart } = useCart()
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
   
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -91,6 +93,15 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     addToCart(product, quantity, variants[selectedVariant])
+  }
+
+  const isWishlisted = isInWishlist(product?.productId || id)
+  const handleWishlistToggle = () => {
+    if (isWishlisted) {
+      removeFromWishlist(product?.productId || id)
+    } else {
+      addToWishlist(product)
+    }
   }
 
   return (
@@ -189,9 +200,16 @@ export default function ProductDetailPage() {
               <button
                 onClick={handleAddToCart}
                 disabled={product.availabilityStatus === 'Out Of Stock'}
-                className="flex-1 btn-primary flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="flex-1 bg-[#CE2028] hover:bg-[#A8161D] text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-300 shadow-md"
               >
                 <ShoppingCart size={20} /> {product.availabilityStatus === 'Out Of Stock' ? 'Out of Stock' : 'Add to Cart'}
+              </button>
+              <button
+                onClick={handleWishlistToggle}
+                className={`p-3.5 border-2 rounded-xl transition-all duration-300 ${isWishlisted ? 'border-[#CE2028] bg-red-50 dark:bg-red-950/20 text-[#CE2028]' : 'border-gray-250 dark:border-gray-700 text-gray-500 hover:text-gray-800 hover:border-gray-350'}`}
+                title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+              >
+                <Heart size={20} className={isWishlisted ? 'fill-current text-[#CE2028]' : ''} />
               </button>
             </div>
 

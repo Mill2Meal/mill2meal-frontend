@@ -1,6 +1,8 @@
 import Header from './Header'
 import Footer from './Footer'
 import MobileBottomNav from './MobileBottomNav'
+import QuickViewModal from './QuickViewModal'
+import FloatingCartBar from './FloatingCartBar'
 
 export default function Layout({ children }) {
   return (
@@ -9,6 +11,8 @@ export default function Layout({ children }) {
       <main className="flex-1">{children}</main>
       <Footer />
       <MobileBottomNav />
+      <FloatingCartBar />
+      <QuickViewModal />
     </div>
   )
 }

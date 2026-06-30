@@ -5,23 +5,33 @@ export default function MonthlyEssentialsBanner() {
   return (
     <section className="py-12 md:py-16">
       <div className="container-custom">
-        <div className="relative overflow-hidden bg-gradient-to-r from-primary-700 to-primary-900 rounded-3xl p-8 md:p-12">
-          <div className="relative z-10 max-w-xl">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-4">
-              <Package size={16} /> Save up to 20%
+        <div className="relative overflow-hidden bg-gradient-to-br from-white via-red-50/40 to-red-100/50 dark:from-[#2A0F11] dark:to-[#12141C] rounded-3xl p-8 md:p-12 border border-red-100/50 dark:border-red-950/30 shadow-lg flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="relative z-10 max-w-xl flex-1 text-left">
+            <div className="inline-flex items-center gap-1.5 bg-[#CE2028] text-white px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
+              <Package size={14} /> Save up to 20%
             </div>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
-              Monthly Essentials Kit
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">
+              <span className="font-logo font-extrabold block mb-1 select-none text-3xl">
+                <span className="text-[#CE2028]">Mill</span>
+                <span className="text-black dark:text-white">To</span>
+                <span className="text-[#CE2028]">Meal</span>
+              </span>
+              <span className="text-gray-900 dark:text-white font-heading font-bold text-3xl md:text-4xl block">Monthly Essentials Kits</span>
             </h2>
-            <p className="text-primary-100 mb-6 leading-relaxed">
-              Pre-curated family baskets with rice, dal, oil, and spices. Subscribe once, never run out. Free delivery every month.
+            <p className="text-gray-600 dark:text-gray-300 mb-8 mt-4 leading-relaxed text-sm md:text-base max-w-md">
+              Pre-curated family baskets with all your kitchen staples. Order once, get delivered every month.
             </p>
-            <Link to="/monthly-essentials" className="inline-flex items-center gap-2 bg-white text-primary-700 px-6 py-3 rounded-lg font-semibold hover:bg-primary-50 transition shadow-lg">
+            <Link to="/monthly-essentials" className="inline-flex items-center gap-2 bg-[#CE2028] hover:bg-[#A8161D] text-white px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
               Explore Kits <ArrowRight size={18} />
             </Link>
           </div>
-          <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-white/5 rounded-full" />
-          <div className="absolute right-20 top-10 w-32 h-32 bg-white/5 rounded-full" />
+          <div className="relative flex-1 w-full max-w-xs md:max-w-md flex justify-center items-center">
+            <img 
+              src={`${import.meta.env.BASE_URL}grocery_basket.png`} 
+              alt="Monthly Essentials Basket" 
+              className="w-full max-h-[300px] object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+            />
+          </div>
         </div>
       </div>
     </section>

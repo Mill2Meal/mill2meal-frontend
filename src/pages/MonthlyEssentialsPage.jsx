@@ -251,13 +251,13 @@ export default function MonthlyEssentialsPage() {
       </div>
 
       {/* Hero */}
-      <div className="bg-gradient-to-br from-secondary-500 to-secondary-700 py-12 md:py-16">
+      <div className="bg-gradient-to-br from-red-50 via-rose-50 to-red-100/60 dark:from-[#2A0F11] dark:via-[#1A090A] dark:to-[#0F111A] py-12 md:py-16 border-b border-red-100/50 dark:border-red-950/20">
         <div className="container-custom text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-4">
+          <div className="inline-flex items-center gap-2 bg-[#CE2028] text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
             <Package size={16} /> Save up to 20%
           </div>
-          <h1 className="text-3xl md:text-4xl font-heading font-bold text-white mb-3">Monthly Essentials Kits</h1>
-          <p className="text-secondary-100 text-lg max-w-2xl mx-auto">Pre-curated family baskets with all your kitchen staples. Order once, get delivered every month.</p>
+          <h1 className="text-3xl md:text-4xl font-heading font-bold text-gray-900 dark:text-white mb-3">Monthly Essentials Kits</h1>
+          <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">Pre-curated family baskets with all your kitchen staples. Order once, get delivered every month.</p>
         </div>
       </div>
 
@@ -526,7 +526,7 @@ export default function MonthlyEssentialsPage() {
                       />
                     </div>
                   </div>
-                  <div className="p-3 bg-amber-50 rounded-lg text-xs text-amber-800 leading-relaxed border border-amber-100">
+                  <div className="p-3 bg-rose-50/50 rounded-lg text-xs text-[#CE2028] leading-relaxed border border-red-100/50 dark:bg-red-950/20 dark:border-red-900/30 dark:text-red-400">
                     <strong>Note:</strong> Subscription orders are generated automatically at 12:00 AM on your delivery days. Delivery completes within 24 hours.
                   </div>
                 </div>

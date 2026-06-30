@@ -3,10 +3,10 @@ import { Store, TrendingUp, Handshake, MapPin } from 'lucide-react'
 export default function FranchisePage() {
   return (
     <div className="pb-20 lg:pb-0">
-      <div className="bg-gradient-to-br from-secondary-500 to-secondary-700 py-16">
+      <div className="bg-gradient-to-br from-[#CE2028] to-[#9E141B] py-16">
         <div className="container-custom text-center">
           <h1 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">Franchise Opportunity</h1>
-          <p className="text-secondary-100 text-lg max-w-2xl mx-auto">Partner with Mill2Meal and bring premium grocery retail to your city.</p>
+          <p className="text-red-100 text-lg max-w-2xl mx-auto">Partner with MillToMeal and bring premium grocery retail to your city.</p>
         </div>
       </div>
 
@@ -19,7 +19,7 @@ export default function FranchisePage() {
             { icon: MapPin, label: '50+ Locations', desc: 'Growing pan-India network' },
           ].map(item => (
             <div key={item.label} className="text-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
-              <item.icon size={32} className="mx-auto text-secondary-500 mb-3" />
+              <item.icon size={32} className="mx-auto text-[#CE2028] mb-3" />
               <p className="font-semibold text-gray-800 mb-1">{item.label}</p>
               <p className="text-sm text-gray-500">{item.desc}</p>
             </div>

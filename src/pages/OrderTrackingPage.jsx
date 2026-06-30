@@ -95,7 +95,7 @@ export default function OrderTrackingPage() {
     const dateStr = new Date(order.createdAt).toLocaleDateString('en-IN')
     const lines = [
       `==================================================`,
-      `                MILL2MEAL INVOICE                 `,
+      `                MILLTOMEAL INVOICE                 `,
       `==================================================`,
       `Invoice Date  : ${new Date().toLocaleDateString('en-IN')}`,
       `Order Number  : ${order.orderNumber || order.orderId}`,

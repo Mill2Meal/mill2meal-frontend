@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Search, ShoppingCart, User, Menu, X, MapPin, Phone, Bell, Sun, Moon, Monitor } from 'lucide-react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Search, ShoppingCart, User, Menu, X, MapPin, Phone, Bell, Sun, Moon, Monitor, Heart } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
 import { useTheme } from '../../context/ThemeContext'
 import { api } from '../../lib/api'
 
 export default function Header() {
+  const location = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -15,10 +16,10 @@ export default function Header() {
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0)
   const [branding, setBranding] = useState({
-    brandName: 'MILL2MEAL',
+    brandName: 'MILLTOMEAL',
     tagline: 'Fresh from Mill to Table',
     logoLight: `${import.meta.env.BASE_URL}logo.jpg`,
-    primaryColor: '#DC2626',
+    primaryColor: '#CE2028',
     secondaryColor: '#F97316',
   })
 
@@ -27,10 +28,10 @@ export default function Header() {
       .then(res => {
         if (res) {
           setBranding({
-            brandName: res.brandName || 'MILL2MEAL',
+            brandName: res.brandName || 'MILLTOMEAL',
             tagline: res.tagline || 'Fresh from Mill to Table',
             logoLight: res.logoLight || `${import.meta.env.BASE_URL}logo.jpg`,
-            primaryColor: res.primaryColor || '#DC2626',
+            primaryColor: res.primaryColor || '#CE2028',
             secondaryColor: res.secondaryColor || '#F97316',
           })
         }
@@ -145,13 +146,13 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       {/* Top Bar */}
-      <div className="bg-primary-800 text-white text-sm py-2 hidden md:block">
-        <div className="container-custom flex justify-between items-center">
-          <div className="flex items-center gap-4">
+      <div className="bg-[#8F1D1D] text-white text-sm py-2">
+        <div className="container-custom flex flex-col md:flex-row justify-between items-center gap-1.5 md:gap-4">
+          <div className="flex flex-row items-center justify-center gap-4 text-[11px] md:text-sm">
             <span className="flex items-center gap-1"><MapPin size={14} /> Free delivery on orders above ₹499</span>
             <span className="flex items-center gap-1"><Phone size={14} /> +91 90595 03227</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 hidden md:flex">
             <Link to="/stores" className="hover:text-primary-200 transition">Store Locator</Link>
             <Link to="/bulk-orders" className="hover:text-primary-200 transition">Bulk Orders</Link>
             <Link to="/franchise" className="hover:text-primary-200 transition">Franchise</Link>
@@ -169,7 +170,7 @@ export default function Header() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-4 select-none">
-          <div className="w-16 h-16 bg-[#DC2626] rounded-xl flex items-center justify-center p-1 overflow-hidden shrink-0">
+          <div className="w-9 h-9 md:w-16 md:h-16 bg-[#CE2028] rounded-xl flex items-center justify-center p-1 overflow-hidden shrink-0">
             <img
             src={branding.logoLight}
             alt={`${branding.brandName} Logo`}
@@ -177,20 +178,20 @@ export default function Header() {
             style={{ imageRendering: "auto" }}
             />
             </div>
-            <div className="flex flex-col justify-center w-[330px]">
-              <h1
-              className="text-[34px] font-bold uppercase leading-none text-[#DC2626]"
-              style={{ width: "fit-content" }}
-              >
-                {branding.brandName}
-                </h1>
-                <p
-                className="mt-[2px] text-[17px] font-normal leading-none text-[#DC2626]"
-                style={{ width: "fit-content" }}
-                >
-                  {branding.tagline}
-                  </p>
-                  </div>
+             <div className="flex flex-col justify-center w-auto select-none pl-0">
+               <h1
+               className="text-[16px] md:text-[17px] font-bold uppercase leading-none font-logo tracking-[0.02em]"
+               >
+                 <span className="text-[#CE2028]">MILL</span>
+                 <span className="text-black dark:text-white">To</span>
+                 <span className="text-[#CE2028]">MEAL</span>
+               </h1>
+                 <p
+                 className="mt-[4px] text-[8px] md:text-[10.2px] font-semibold leading-none text-[#CE2028] tracking-[0.01em]"
+                 >
+                   {branding.tagline}
+                   </p>
+             </div>
                   </Link>
 
           {/* Desktop Search with Autocomplete */}
@@ -236,9 +237,7 @@ export default function Header() {
                 className="p-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition"
                 title="Change Theme"
               >
-                {theme === 'light' && <Sun size={22} />}
-                {theme === 'dark' && <Moon size={22} />}
-                {theme === 'system' && <Monitor size={22} />}
+                {theme === 'dark' ? <Moon size={22} /> : <Sun size={22} />}
               </button>
               {showThemeMenu && (
                 <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg py-1 z-50 min-w-[120px]">
@@ -255,13 +254,6 @@ export default function Header() {
                     className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 flex items-center gap-2"
                   >
                     <Moon size={16} /> Dark
-                  </button>
-                  <button 
-                    type="button"
-                    onClick={() => { selectTheme('system'); setShowThemeMenu(false); }} 
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 flex items-center gap-2"
-                  >
-                    <Monitor size={16} /> System
                   </button>
                 </div>
               )}
@@ -284,10 +276,14 @@ export default function Header() {
                 )}
               </Link>
             )}
+            <Link to="/wishlist" className="flex items-center gap-2 p-2 text-gray-700 hover:text-[#CE2028] transition" title="Wishlist">
+              <Heart size={22} />
+              <span className="hidden md:inline text-sm font-medium">Wishlist</span>
+            </Link>
             <Link to="/cart" className="relative flex items-center gap-2 p-2 text-gray-700 hover:text-primary-600 transition">
               <ShoppingCart size={22} />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-secondary-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#CE2028] text-white text-xs rounded-full flex items-center justify-center font-bold">
                   {cartCount}
                 </span>
               )}
@@ -300,24 +296,45 @@ export default function Header() {
       {/* Desktop/Mobile Navigation */}
       <nav className="category-nav border-t border-gray-100 bg-white">
         <div className="container-custom">
-          <ul className="flex items-center gap-1">
-            {categories.map(cat => (
-              <li key={cat.slug}>
-                <Link
-                  to={`/category/${cat.slug}`}
-                  className="block px-4 py-3 text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition"
-                >
-                  {cat.name}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <Link to="/monthly-essentials" className="block px-4 py-3 text-sm font-semibold text-secondary-600 hover:bg-secondary-50 rounded-lg transition">
+          <ul className="flex items-center gap-2">
+            {categories.map(cat => {
+              const isActive = location.pathname === `/category/${cat.slug}`
+              return (
+                <li key={cat.slug} className="py-2 shrink-0">
+                  <Link
+                    to={`/category/${cat.slug}`}
+                    className={`block px-4 py-2 text-xs font-semibold rounded-full border transition-all duration-300 transform whitespace-nowrap shadow-sm hover:shadow hover:-translate-y-0.5 ${
+                      isActive 
+                        ? 'bg-gradient-to-br from-[#CE2028] to-[#E63B44] text-white border-[#CE2028] shadow-md dark:from-[#CE2028] dark:to-[#B51622]' 
+                        : 'bg-gradient-to-br from-red-50/50 to-rose-100/40 border-red-100/50 text-red-900 hover:from-red-100 hover:to-rose-200/80 hover:border-[#CE2028]/35 dark:from-[#1E0B0C]/40 dark:to-[#160E12]/30 dark:border-red-950/50 dark:text-gray-300 dark:hover:from-[#2B0A0C] dark:hover:to-[#1E0A0C] dark:hover:border-[#CE2028]/45'
+                    }`}
+                  >
+                    {cat.name}
+                  </Link>
+                </li>
+              )
+            })}
+            <li className="py-2 shrink-0">
+              <Link 
+                to="/monthly-essentials" 
+                className={`block px-4 py-2 text-xs font-bold rounded-full border transition-all duration-300 transform whitespace-nowrap shadow-sm hover:shadow hover:-translate-y-0.5 ${
+                  location.pathname === '/monthly-essentials'
+                    ? 'bg-gradient-to-br from-[#CE2028] to-[#E63B44] text-white border-[#CE2028] shadow-md dark:from-[#CE2028] dark:to-[#B51622]'
+                    : 'bg-gradient-to-br from-red-50/50 to-rose-100/40 border-red-100/50 text-[#CE2028] hover:from-red-100 hover:to-rose-200/80 hover:border-[#CE2028]/35 dark:from-[#1E0B0C]/40 dark:to-[#160E12]/30 dark:border-red-950/50 dark:text-[#CE2028] dark:hover:from-[#2B0A0C] dark:hover:to-[#1E0A0C]'
+                }`}
+              >
                 Monthly Essentials
               </Link>
             </li>
-            <li>
-              <Link to="/subscriptions" className="block px-4 py-3 text-sm font-semibold text-primary-600 hover:bg-primary-50 rounded-lg transition">
+            <li className="py-2 shrink-0">
+              <Link 
+                to="/subscriptions" 
+                className={`block px-4 py-2 text-xs font-bold rounded-full border transition-all duration-300 transform whitespace-nowrap shadow-sm hover:shadow hover:-translate-y-0.5 ${
+                  location.pathname === '/subscriptions'
+                    ? 'bg-gradient-to-br from-[#CE2028] to-[#E63B44] text-white border-[#CE2028] shadow-md dark:from-[#CE2028] dark:to-[#B51622]'
+                    : 'bg-gradient-to-br from-red-50/50 to-rose-100/40 border-red-100/50 text-[#CE2028] hover:from-red-100 hover:to-rose-200/80 hover:border-[#CE2028]/35 dark:from-[#1E0B0C]/40 dark:to-[#160E12]/30 dark:border-red-950/50 dark:text-[#CE2028] dark:hover:from-[#2B0A0C] dark:hover:to-[#1E0A0C]'
+                }`}
+              >
                 Subscriptions
               </Link>
             </li>
@@ -385,8 +402,12 @@ export default function Header() {
           <div className="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-xl overflow-y-auto">
             <div className="p-4 border-b flex items-center justify-between">
               <Link to="/" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
-                <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="Mill2Meal Logo" className="w-8 h-8 rounded-lg object-cover shadow-sm" />
-                <span className="font-heading font-bold text-primary-800">Mill2Meal</span>
+                <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="MillToMeal Logo" className="w-8 h-8 rounded-lg object-cover shadow-sm" />
+                <span className="font-logo font-bold text-lg select-none">
+                  <span className="text-[#CE2028]">MILL</span>
+                  <span className="text-black dark:text-white">To</span>
+                  <span className="text-[#CE2028]">MEAL</span>
+                </span>
               </Link>
               <button onClick={() => setIsMenuOpen(false)} className="p-2"><X size={24} /></button>
             </div>
@@ -403,16 +424,20 @@ export default function Header() {
                 </Link>
               ))}
               <hr className="my-4" />
-              <Link to="/monthly-essentials" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-secondary-600 font-semibold">Monthly Essentials</Link>
-              <Link to="/subscriptions" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-primary-600 font-semibold">Subscriptions</Link>
+              <Link to="/monthly-essentials" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-[#CE2028] font-semibold hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg">Monthly Essentials</Link>
+              <Link to="/subscriptions" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-[#CE2028] font-semibold hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg">Subscriptions</Link>
               <hr className="my-4" />
               {localStorage.getItem('accessToken') ? (
                 <>
                   <Link to="/account" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-gray-700">My Account</Link>
                   <Link to="/orders" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-gray-700">My Orders</Link>
+                  <Link to="/wishlist" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-gray-700">My Wishlist</Link>
                 </>
               ) : (
-                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-primary-600 font-semibold">Login</Link>
+                <>
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-primary-600 font-semibold">Login</Link>
+                  <Link to="/wishlist" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-gray-700">My Wishlist</Link>
+                </>
               )}
               <Link to="/stores" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-gray-700">Store Locator</Link>
               <Link to="/about" onClick={() => setIsMenuOpen(false)} className="block py-3 px-3 text-gray-700">About Us</Link>

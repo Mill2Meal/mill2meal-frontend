@@ -40,7 +40,7 @@ export default function PaymentMethodsPage() {
             <div>
               <h4 className="font-semibold text-primary-950 text-sm">Secure Checkout Process</h4>
               <p className="text-xs text-primary-700 leading-relaxed mt-0.5">
-                To guarantee the highest level of security, Mill2Meal redirects you directly to our PCI-compliant payment gateway partners during checkout.
+                To guarantee the highest level of security, MillToMeal redirects you directly to our PCI-compliant payment gateway partners during checkout.
               </p>
             </div>
           </div>
@@ -69,7 +69,7 @@ export default function PaymentMethodsPage() {
               Payment methods are selected during checkout.
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              No payment credentials or card details are stored by Mill2Meal.
+              No payment credentials or card details are stored by MillToMeal.
             </p>
           </div>
         </div>

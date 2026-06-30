@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import { ThemeProvider } from './context/ThemeContext'
+import { WishlistProvider } from './context/WishlistContext'
 import Layout from './components/layout/Layout'
 import HomePage from './pages/HomePage'
 import CategoriesPage from './pages/CategoriesPage'
@@ -31,6 +32,7 @@ import AddressesPage from './pages/AddressesPage'
 import PaymentMethodsPage from './pages/PaymentMethodsPage'
 import NotificationsPage from './pages/NotificationsPage'
 import OffersPage from './pages/OffersPage'
+import WishlistPage from './pages/WishlistPage'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -46,16 +48,18 @@ function App() {
   return (
     <ThemeProvider>
       <CartProvider>
-        <Router basename="/mill2meal-frontend">
-          <ScrollToTop />
-          <Layout>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/categories" element={<CategoriesPage />} />
-              <Route path="/category/:slug" element={<CategoryPage />} />
-              <Route path="/product/:id" element={<ProductDetailPage />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
+        <WishlistProvider>
+          <Router basename="/mill2meal-frontend">
+            <ScrollToTop />
+            <Layout>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/categories" element={<CategoriesPage />} />
+                <Route path="/category/:slug" element={<CategoryPage />} />
+                <Route path="/product/:id" element={<ProductDetailPage />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/wishlist" element={<WishlistPage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/account" element={<AccountPage />} />
               <Route path="/account/addresses" element={<AddressesPage />} />
               <Route path="/account/payment-methods" element={<PaymentMethodsPage />} />
@@ -81,9 +85,10 @@ function App() {
             </Routes>
           </Layout>
         </Router>
-      </CartProvider>
-    </ThemeProvider>
-  )
+      </WishlistProvider>
+    </CartProvider>
+  </ThemeProvider>
+)
 }
 
 export default App

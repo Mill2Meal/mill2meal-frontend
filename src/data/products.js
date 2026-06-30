@@ -281,15 +281,15 @@ export const products = [
 
 export const testimonials = [
   { id: 1, name: 'Priya Sharma', location: 'Hyderabad', rating: 5, text: 'The quality of rice and dal is exceptional. You can clearly taste the difference from supermarket brands. My family loves the freshness!' },
-  { id: 2, name: 'Rajesh Kumar', location: 'Bangalore', rating: 5, text: 'I have been using Mill2Meal cold-pressed oils for 6 months now. The traditional extraction method really preserves the nutrients and flavor.' },
+  { id: 2, name: 'Rajesh Kumar', location: 'Bangalore', rating: 5, text: 'I have been using MillToMeal cold-pressed oils for 6 months now. The traditional extraction method really preserves the nutrients and flavor.' },
   { id: 3, name: 'Anita Reddy', location: 'Visakhapatnam', rating: 5, text: 'The monthly essentials subscription is a game-changer. I never run out of staples and the quality is consistently excellent.' },
   { id: 4, name: 'Suresh Patel', location: 'Chennai', rating: 4, text: 'Great variety of millets and organic products. Delivery is always on time. Highly recommend for health-conscious families.' },
 ]
 
 export const stores = [
-  { id: 1, name: 'Mill2Meal - Madhapur', address: 'Plot 45, Hitech City Main Road, Madhapur, Hyderabad - 500081', phone: '+91 9876543210', hours: '8:00 AM - 9:00 PM', lat: 17.4486, lng: 78.3908 },
-  { id: 2, name: 'Mill2Meal - Banjara Hills', address: 'Road No. 12, Near City Center Mall, Banjara Hills, Hyderabad - 500034', phone: '+91 9876543211', hours: '8:00 AM - 9:00 PM', lat: 17.4156, lng: 78.4347 },
-  { id: 3, name: 'Mill2Meal - Gachibowli', address: 'DLF Cyber City, Opposite IKEA, Gachibowli, Hyderabad - 500032', phone: '+91 9876543212', hours: '9:00 AM - 10:00 PM', lat: 17.4401, lng: 78.3489 },
+  { id: 1, name: 'MillToMeal - Madhapur', address: 'Plot 45, Hitech City Main Road, Madhapur, Hyderabad - 500081', phone: '+91 9876543210', hours: '8:00 AM - 9:00 PM', lat: 17.4486, lng: 78.3908 },
+  { id: 2, name: 'MillToMeal - Banjara Hills', address: 'Road No. 12, Near City Center Mall, Banjara Hills, Hyderabad - 500034', phone: '+91 9876543211', hours: '8:00 AM - 9:00 PM', lat: 17.4156, lng: 78.4347 },
+  { id: 3, name: 'MillToMeal - Gachibowli', address: 'DLF Cyber City, Opposite IKEA, Gachibowli, Hyderabad - 500032', phone: '+91 9876543212', hours: '9:00 AM - 10:00 PM', lat: 17.4401, lng: 78.3489 },
 ]
 
 export const subscriptionPlans = [

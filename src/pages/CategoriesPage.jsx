@@ -26,7 +26,7 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    document.title = 'All Categories | Mill2Meal'
+    document.title = 'All Categories | MillToMeal'
 
     // Add/Update meta description
     let metaDescription = document.querySelector('meta[name="description"]')
@@ -36,8 +36,7 @@ export default function CategoriesPage() {
       document.head.appendChild(metaDescription)
     }
     metaDescription.setAttribute(
-      'content',
-      'Explore all product categories at Mill2Meal. From fresh flour and grains to premium cold-pressed oils, view all categories.'
+      'Explore all product categories at MillToMeal. From fresh flour and grains to premium cold-pressed oils, view all categories.'
     )
 
     // Ensure indexable

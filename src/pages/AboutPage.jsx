@@ -8,7 +8,7 @@ export default function AboutPage() {
         <div className="container-custom text-center">
           <h1 className="text-3xl md:text-5xl font-heading font-bold text-gray-900 mb-4">Our Story</h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Mill2Meal was born from a simple idea — every Indian family deserves access to fresh, unadulterated staples directly from the source.
+            MillToMeal was born from a simple idea — every Indian family deserves access to fresh, unadulterated staples directly from the source.
           </p>
         </div>
       </div>
