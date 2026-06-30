@@ -30,44 +30,49 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    <div className="card group">
-      <Link to={`/product/${id}`} className="block relative overflow-hidden">
-        <img
-          src={imageUrl}
-          alt={name}
-          className="w-full h-48 sm:h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        {badge && (
-          <span className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold text-white ${
-            badge === 'Best Seller' ? 'bg-secondary-500' :
-            badge === 'Organic' ? 'bg-green-600' :
-            badge === 'Premium' ? 'bg-gold' :
-            badge === 'New' ? 'bg-purple-600' :
-            badge === 'Healthy' ? 'bg-teal-600' :
-            'bg-primary-600'
-          }`}>
-            {badge}
-          </span>
-        )}
-        {discount > 0 && (
-          <span className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-            -{discount}%
-          </span>
-        )}
-      </Link>
-      <div className="p-4">
-        <Link to={`/product/${id}`}>
-          <h3 className="font-semibold text-gray-800 mb-1 line-clamp-1 hover:text-primary-600 transition">{name}</h3>
+    <div className="flex flex-col gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 group border border-gray-100/80 dark:border-gray-700">
+      {/* Image Sub-Card Container */}
+      <div className="relative rounded-xl overflow-hidden bg-gray-50 dark:bg-gray-900/50 border border-gray-100/50 dark:border-gray-700/50 p-2 shrink-0">
+        <Link to={`/product/${id}`} className="block relative overflow-hidden rounded-lg">
+          <img
+            src={imageUrl}
+            alt={name}
+            className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500 rounded-lg"
+          />
+          {badge && (
+            <span className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold text-white ${
+              badge === 'Best Seller' ? 'bg-secondary-500' :
+              badge === 'Organic' ? 'bg-green-600' :
+              badge === 'Premium' ? 'bg-gold' :
+              badge === 'New' ? 'bg-purple-600' :
+              badge === 'Healthy' ? 'bg-teal-600' :
+              'bg-primary-600'
+            }`}>
+              {badge}
+            </span>
+          )}
+          {discount > 0 && (
+            <span className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+              -{discount}%
+            </span>
+          )}
         </Link>
-        <p className="text-sm text-gray-500 mb-2">{unit}</p>
+      </div>
+
+      {/* Details Sub-Card Container */}
+      <div className="flex flex-col flex-1 bg-gray-50/50 dark:bg-gray-900/10 p-3 rounded-xl border border-gray-100/50 dark:border-gray-700/20">
+        <Link to={`/product/${id}`}>
+          <h3 className="font-semibold text-gray-800 dark:text-gray-100 mb-1 line-clamp-1 hover:text-primary-600 dark:hover:text-primary-400 transition">{name}</h3>
+        </Link>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{unit}</p>
         <div className="flex items-center gap-1 mb-3">
           <Star size={14} className="fill-yellow-400 text-yellow-400" />
-          <span className="text-sm font-medium text-gray-700">{rating}</span>
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{rating}</span>
           <span className="text-xs text-gray-400">({reviews})</span>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-auto">
           <div>
-            <span className="text-lg font-bold text-gray-900">₹{price}</span>
+            <span className="text-lg font-bold text-gray-900 dark:text-gray-100">₹{price}</span>
             {originalPrice > price && (
               <span className="text-sm text-gray-400 line-through ml-2">₹{originalPrice}</span>
             )}

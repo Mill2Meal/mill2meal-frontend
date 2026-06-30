@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
+import { ThemeProvider } from './context/ThemeContext'
 import Layout from './components/layout/Layout'
 import HomePage from './pages/HomePage'
 import CategoriesPage from './pages/CategoriesPage'
@@ -43,43 +44,45 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <CartProvider>
-      <Router basename="/mill2meal-frontend">
-        <ScrollToTop />
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route path="/category/:slug" element={<CategoryPage />} />
-            <Route path="/product/:id" element={<ProductDetailPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/account" element={<AccountPage />} />
-            <Route path="/account/addresses" element={<AddressesPage />} />
-            <Route path="/account/payment-methods" element={<PaymentMethodsPage />} />
-            <Route path="/account/notifications" element={<NotificationsPage />} />
-            <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/orders/:id" element={<OrderTrackingPage />} />
-            <Route path="/subscriptions" element={<SubscriptionsPage />} />
-            <Route path="/monthly-essentials" element={<MonthlyEssentialsPage />} />
-            <Route path="/offers" element={<OffersPage />} />
-            <Route path="/stores" element={<StoreLocatorPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/faq" element={<FaqPage />} />
-            <Route path="/quality-promise" element={<QualityPromisePage />} />
-            <Route path="/bulk-orders" element={<BulkOrdersPage />} />
-            <Route path="/franchise" element={<FranchisePage />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="/terms" element={<TermsPage />} />
-            <Route path="/refund-policy" element={<RefundPolicyPage />} />
-            <Route path="/shipping-policy" element={<ShippingPolicyPage />} />
-            <Route path="/search" element={<SearchResultsPage />} />
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
-        </Layout>
-      </Router>
-    </CartProvider>
+    <ThemeProvider>
+      <CartProvider>
+        <Router basename="/mill2meal-frontend">
+          <ScrollToTop />
+          <Layout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/categories" element={<CategoriesPage />} />
+              <Route path="/category/:slug" element={<CategoryPage />} />
+              <Route path="/product/:id" element={<ProductDetailPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/account" element={<AccountPage />} />
+              <Route path="/account/addresses" element={<AddressesPage />} />
+              <Route path="/account/payment-methods" element={<PaymentMethodsPage />} />
+              <Route path="/account/notifications" element={<NotificationsPage />} />
+              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/orders/:id" element={<OrderTrackingPage />} />
+              <Route path="/subscriptions" element={<SubscriptionsPage />} />
+              <Route path="/monthly-essentials" element={<MonthlyEssentialsPage />} />
+              <Route path="/offers" element={<OffersPage />} />
+              <Route path="/stores" element={<StoreLocatorPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/faq" element={<FaqPage />} />
+              <Route path="/quality-promise" element={<QualityPromisePage />} />
+              <Route path="/bulk-orders" element={<BulkOrdersPage />} />
+              <Route path="/franchise" element={<FranchisePage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/refund-policy" element={<RefundPolicyPage />} />
+              <Route path="/shipping-policy" element={<ShippingPolicyPage />} />
+              <Route path="/search" element={<SearchResultsPage />} />
+              <Route path="/login" element={<LoginPage />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </CartProvider>
+    </ThemeProvider>
   )
 }
 

@@ -139,6 +139,9 @@ export async function apiFetch(path, options = {}) {
 }
 
 export const api = {
+  branding: {
+    get: () => apiFetch('/branding'),
+  },
   auth: {
     requestOtp: (mobileNumber) =>
       apiFetch('/auth/otp/request', {

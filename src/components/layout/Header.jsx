@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Search, ShoppingCart, User, Menu, X, MapPin, Phone, Bell } from 'lucide-react'
+import { Search, ShoppingCart, User, Menu, X, MapPin, Phone, Bell, Sun, Moon, Monitor } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
+import { useTheme } from '../../context/ThemeContext'
 import { api } from '../../lib/api'
 
 export default function Header() {
@@ -9,8 +10,33 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [suggestions, setSuggestions] = useState([])
+  const [showThemeMenu, setShowThemeMenu] = useState(false)
+  const { theme, selectTheme } = useTheme()
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0)
+  const [branding, setBranding] = useState({
+    brandName: 'MILL2MEAL',
+    tagline: 'Fresh from Mill to Table',
+    logoLight: `${import.meta.env.BASE_URL}logo.jpg`,
+    primaryColor: '#DC2626',
+    secondaryColor: '#F97316',
+  })
+
+  useEffect(() => {
+    api.branding.get()
+      .then(res => {
+        if (res) {
+          setBranding({
+            brandName: res.brandName || 'MILL2MEAL',
+            tagline: res.tagline || 'Fresh from Mill to Table',
+            logoLight: res.logoLight || `${import.meta.env.BASE_URL}logo.jpg`,
+            primaryColor: res.primaryColor || '#DC2626',
+            secondaryColor: res.secondaryColor || '#F97316',
+          })
+        }
+      })
+      .catch(err => console.error(err))
+  }, [])
   
   const [categories, setCategories] = useState([
     { name: 'Rice & Millets', slug: 'rice-millets' },
@@ -142,13 +168,30 @@ export default function Header() {
           </button>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="Mill2Meal Logo" className="w-10 h-10 rounded-xl object-cover shadow-md" />
-            <div>
-              <h1 className="text-xl font-heading font-bold text-primary-800 leading-tight">Mill2Meal</h1>
-              <p className="text-[10px] text-gray-500 -mt-1">Fresh from Mill to Table</p>
+          <Link to="/" className="flex items-center gap-4 select-none">
+          <div className="w-16 h-16 bg-[#DC2626] rounded-xl flex items-center justify-center p-1 overflow-hidden shrink-0">
+            <img
+            src={branding.logoLight}
+            alt={`${branding.brandName} Logo`}
+            className="max-h-full max-w-full object-contain scale-[1.35]"
+            style={{ imageRendering: "auto" }}
+            />
             </div>
-          </Link>
+            <div className="flex flex-col justify-center w-[330px]">
+              <h1
+              className="text-[34px] font-bold uppercase leading-none text-[#DC2626]"
+              style={{ width: "fit-content" }}
+              >
+                {branding.brandName}
+                </h1>
+                <p
+                className="mt-[2px] text-[17px] font-normal leading-none text-[#DC2626]"
+                style={{ width: "fit-content" }}
+                >
+                  {branding.tagline}
+                  </p>
+                  </div>
+                  </Link>
 
           {/* Desktop Search with Autocomplete */}
           <form onSubmit={handleSearch} onClick={(e) => e.stopPropagation()} className="hidden lg:flex flex-1 max-w-xl mx-8 relative">
@@ -185,6 +228,45 @@ export default function Header() {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
+            {/* Theme Toggle Switcher */}
+            <div className="relative">
+              <button 
+                type="button"
+                onClick={() => setShowThemeMenu(!showThemeMenu)} 
+                className="p-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition"
+                title="Change Theme"
+              >
+                {theme === 'light' && <Sun size={22} />}
+                {theme === 'dark' && <Moon size={22} />}
+                {theme === 'system' && <Monitor size={22} />}
+              </button>
+              {showThemeMenu && (
+                <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg py-1 z-50 min-w-[120px]">
+                  <button 
+                    type="button"
+                    onClick={() => { selectTheme('light'); setShowThemeMenu(false); }} 
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 flex items-center gap-2"
+                  >
+                    <Sun size={16} /> Light
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => { selectTheme('dark'); setShowThemeMenu(false); }} 
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 flex items-center gap-2"
+                  >
+                    <Moon size={16} /> Dark
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => { selectTheme('system'); setShowThemeMenu(false); }} 
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 flex items-center gap-2"
+                  >
+                    <Monitor size={16} /> System
+                  </button>
+                </div>
+              )}
+            </div>
+
             <button onClick={() => setIsSearchOpen(true)} className="lg:hidden p-2 text-gray-700">
               <Search size={22} />
             </button>
