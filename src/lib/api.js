@@ -75,28 +75,61 @@ export async function apiFetch(path, options = {}) {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
-  const response = await fetch(`${API_BASE}${path}`, {
-    ...options,
-    headers,
-    credentials: 'include',
-  });
+  let response;
+  try {
+    response = await fetch(`${API_BASE}${path}`, {
+      ...options,
+      headers,
+      credentials: 'include',
+    });
+  } catch (error) {
+    console.error('Customer network/offline connection error:', error);
+    throw new ApiError(
+      'Unable to connect to the store. Please check your internet connection and try again.',
+      503,
+      'NETWORK_ERROR'
+    );
+  }
 
   const text = await response.text();
-  const body = text ? JSON.parse(text) : {};
+  let body = {};
+  try {
+    body = text ? JSON.parse(text) : {};
+  } catch (jsonError) {
+    console.error('Customer failed to parse JSON response:', jsonError);
+    if (!response.ok) {
+      throw new ApiError(
+        `Request failed (Status ${response.status}). Please try again later.`,
+        response.status,
+        'INVALID_RESPONSE'
+      );
+    }
+  }
 
   if (!response.ok) {
     if (response.status === 401 && typeof window !== 'undefined') {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      // Redirect to login page if we fail auth
       const base = import.meta.env.BASE_URL || '/';
       const loginPath = (base.endsWith('/') ? base : base + '/') + 'login';
       if (window.location.pathname !== loginPath) {
         window.location.href = loginPath + '?redirect=' + encodeURIComponent(window.location.pathname);
       }
     }
+    
+    let friendlyMessage = body.message || `API Error: ${response.statusText}`;
+    if (friendlyMessage.toLowerCase().includes('internal server error')) {
+      friendlyMessage = 'We are experiencing temporary server issues. Please try again in a few moments.';
+    } else if (response.status === 403) {
+      friendlyMessage = 'You do not have access to this resource.';
+    } else if (response.status === 404) {
+      friendlyMessage = 'The requested resource could not be found.';
+    } else if (response.status === 500) {
+      friendlyMessage = 'An unexpected server error occurred. Please try again later.';
+    }
+
     throw new ApiError(
-      body.message || `API Error: ${response.statusText}`,
+      friendlyMessage,
       response.status,
       body.errorCode,
     );
