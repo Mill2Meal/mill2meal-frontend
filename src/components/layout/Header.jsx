@@ -143,9 +143,7 @@ export default function Header() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">M</span>
-            </div>
+            <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="Mill2Meal Logo" className="w-10 h-10 rounded-xl object-cover shadow-md" />
             <div>
               <h1 className="text-xl font-heading font-bold text-primary-800 leading-tight">Mill2Meal</h1>
               <p className="text-[10px] text-gray-500 -mt-1">Fresh from Mill to Table</p>
@@ -305,9 +303,7 @@ export default function Header() {
           <div className="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-xl overflow-y-auto">
             <div className="p-4 border-b flex items-center justify-between">
               <Link to="/" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
-                <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold">M</span>
-                </div>
+                <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="Mill2Meal Logo" className="w-8 h-8 rounded-lg object-cover shadow-sm" />
                 <span className="font-heading font-bold text-primary-800">Mill2Meal</span>
               </Link>
               <button onClick={() => setIsMenuOpen(false)} className="p-2"><X size={24} /></button>

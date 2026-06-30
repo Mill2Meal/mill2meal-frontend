@@ -28,9 +28,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">M</span>
-              </div>
+              <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="Mill2Meal Logo" className="w-10 h-10 rounded-xl object-cover shadow-md" />
               <span className="text-xl font-heading font-bold text-white">Mill2Meal</span>
             </Link>
             <p className="text-sm text-gray-400 mb-4 leading-relaxed">
