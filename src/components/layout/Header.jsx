@@ -297,8 +297,8 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Desktop Navigation */}
-      <nav className="hidden lg:block border-t border-gray-100 bg-white">
+      {/* Desktop/Mobile Navigation */}
+      <nav className="category-nav border-t border-gray-100 bg-white">
         <div className="container-custom">
           <ul className="flex items-center gap-1">
             {categories.map(cat => (
