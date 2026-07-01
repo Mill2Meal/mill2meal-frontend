@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useNavigate } from 'react-router-dom'
 import { X, Star, Heart, Plus, Minus, ShoppingBag, ShieldCheck, RefreshCw, Award } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
@@ -70,13 +71,13 @@ export default function QuickViewModal() {
     navigate(`/product/${id}`)
   }
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300 animate-fadeIn">
       {/* Outside click handler */}
       <div className="absolute inset-0" onClick={closeQuickView} />
       
       {/* Modal Box */}
-      <div className="relative bg-white dark:bg-gray-900 w-[min(calc(100vw-2rem),672px)] rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col md:flex-row transform transition-all duration-300 animate-scaleUp max-h-[90dvh] overflow-y-auto">
+      <div className="relative bg-white dark:bg-gray-900 w-full max-w-[672px] rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col md:flex-row transform transition-all duration-300 animate-scaleUp max-h-[90dvh] overflow-y-auto">
         {/* Close Button */}
         <button 
           onClick={closeQuickView}
@@ -102,47 +103,50 @@ export default function QuickViewModal() {
         {/* Right Side: Product Details */}
         <div className="w-full md:w-1/2 p-6 flex flex-col justify-between text-left">
           <div>
-            <div className="flex items-center justify-between gap-4 mb-2">
-              <span className="text-xs font-bold text-[#CE2028] bg-red-50 dark:bg-red-950/30 px-2.5 py-1 rounded-full uppercase tracking-wider">
-                {quickViewProduct.brand || '100% Organic'}
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <span className="text-[10px] font-bold text-gray-450 dark:text-gray-400 uppercase tracking-widest bg-gray-100 dark:bg-gray-850 px-2.5 py-1 rounded-md">
+                {unit}
               </span>
+              <div className="flex items-center gap-1">
+                <Star size={14} className="fill-yellow-400 text-yellow-400" />
+                <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{rating} ({reviews})</span>
+              </div>
             </div>
-
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white leading-snug mb-1">{name}</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mb-3">{unit}</p>
-
-            {/* Ratings */}
-            <div className="flex items-center gap-1.5 mb-4">
-              <Star size={16} className="fill-yellow-400 text-yellow-400" />
-              <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">{rating}</span>
-              <span className="text-xs text-gray-400">({reviews} reviews)</span>
-            </div>
+            
+            <h2 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2 leading-tight">
+              {name}
+            </h2>
 
             {/* Price section */}
-            <div className="flex items-baseline gap-3 mb-4">
-              <span className="text-2xl font-black text-gray-900 dark:text-white">₹{price}</span>
+            <div className="flex items-baseline gap-2 mb-4">
+              <span className="text-2xl font-bold text-gray-900 dark:text-white">₹{price}</span>
               {originalPrice > price && (
-                <span className="text-base text-gray-400 line-through">₹{originalPrice}</span>
+                <>
+                  <span className="text-sm text-gray-400 line-through">₹{originalPrice}</span>
+                  <span className="text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/20 px-2 py-0.5 rounded">
+                    Save {Math.round(((originalPrice - price) / originalPrice) * 100)}%
+                  </span>
+                </>
               )}
             </div>
 
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-5 leading-relaxed line-clamp-3">
-              {quickViewProduct.description || 'Premium quality handpicked grocery staples sourced directly from certified organic farms and mills. Freshly packed on order to retain natural nutrients and absolute purity.'}
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-6 line-clamp-4">
+              {quickViewProduct.description || `Premium quality fresh ${name} carefully sourced and packed under hygienic conditions to preserve purity, nutrition, and natural taste for your family.`}
             </p>
 
             {/* Trust Tags */}
             <div className="grid grid-cols-3 gap-2 border-t border-b border-gray-100 dark:border-gray-800 py-3 mb-6">
-              <div className="flex flex-col items-center text-center gap-1">
-                <ShieldCheck size={16} className="text-emerald-500" />
-                <span className="text-[9px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider">100% Original</span>
+              <div className="flex flex-col items-center text-center">
+                <ShieldCheck size={16} className="text-[#CE2028] mb-1" />
+                <span className="text-[9px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider">100% Safe</span>
               </div>
-              <div className="flex flex-col items-center text-center gap-1">
-                <Award size={16} className="text-amber-500" />
-                <span className="text-[9px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Quality Badge</span>
+              <div className="flex flex-col items-center text-center">
+                <RefreshCw size={16} className="text-[#CE2028] mb-1" />
+                <span className="text-[9px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Hygienic</span>
               </div>
-              <div className="flex flex-col items-center text-center gap-1">
-                <RefreshCw size={16} className="text-blue-500" />
-                <span className="text-[9px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Easy Returns</span>
+              <div className="flex flex-col items-center text-center">
+                <Award size={16} className="text-[#CE2028] mb-1" />
+                <span className="text-[9px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Premium</span>
               </div>
             </div>
           </div>
@@ -150,57 +154,47 @@ export default function QuickViewModal() {
           <div>
             <div className="mb-4 text-left">
               <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Quantity</p>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  {/* Quantity Selector */}
-                  <div className="flex items-center border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-850 rounded-xl overflow-hidden h-12 flex-1 sm:flex-initial justify-between sm:w-32">
-                    <button 
-                      onClick={() => {
-                        const nextQty = Math.max(1, localQty - 1);
-                        setLocalQty(nextQty);
-                        if (quantityInCart > 0) updateQuantity(id, nextQty);
-                      }}
-                      className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition border-none bg-transparent"
-                    >
-                      <Minus size={16} />
-                    </button>
-                    <span className="w-10 text-center font-bold text-gray-805 dark:text-gray-250">{localQty}</span>
-                    <button 
-                      onClick={() => {
-                        const nextQty = localQty + 1;
-                        setLocalQty(nextQty);
-                        if (quantityInCart > 0) updateQuantity(id, nextQty);
-                      }}
-                      className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition border-none bg-transparent"
-                    >
-                      <Plus size={16} />
-                    </button>
-                  </div>
-
-                  {/* Wishlist Button on Mobile */}
+              <div className="flex items-center gap-3">
+                {/* Quantity Selector */}
+                <div className="flex items-center border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-850 rounded-xl overflow-hidden h-12 shrink-0">
                   <button 
-                    onClick={handleWishlistToggle}
-                    className="w-12 h-12 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 rounded-xl flex sm:hidden items-center justify-center text-[#CE2028] hover:bg-red-50 dark:hover:bg-red-950/20 transition shadow-sm shrink-0 bg-transparent"
+                    onClick={() => {
+                      const nextQty = Math.max(1, localQty - 1);
+                      setLocalQty(nextQty);
+                      if (quantityInCart > 0) updateQuantity(id, nextQty);
+                    }}
+                    className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition flex items-center justify-center"
                   >
-                    <Heart size={20} className={isWishlisted ? 'fill-current' : ''} />
+                    <Minus size={16} />
+                  </button>
+                  <span className="w-10 text-center font-bold text-gray-800 dark:text-gray-250">{localQty}</span>
+                  <button 
+                    onClick={() => {
+                      const nextQty = localQty + 1;
+                      setLocalQty(nextQty);
+                      if (quantityInCart > 0) updateQuantity(id, nextQty);
+                    }}
+                    className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition flex items-center justify-center"
+                  >
+                    <Plus size={16} />
                   </button>
                 </div>
 
-                {/* Add to Cart Button */}
+                {/* Add to Cart / Out of Stock Button */}
                 <button
                   onClick={() => {
                     addToCart(quickViewProduct, localQty);
                   }}
                   disabled={!isAvailable}
-                  className="flex-1 h-12 bg-[#CE2028] hover:bg-[#A8161D] disabled:bg-gray-200 dark:disabled:bg-gray-850 dark:disabled:text-gray-600 text-white font-bold px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:cursor-not-allowed text-sm border-none w-full sm:w-auto"
+                  className="flex-1 h-12 bg-[#CE2028] hover:bg-[#A8161D] disabled:bg-gray-200 dark:disabled:bg-gray-850 dark:disabled:text-gray-600 text-white font-bold px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:cursor-not-allowed text-sm"
                 >
                   <ShoppingBag size={18} /> {isAvailable ? (quantityInCart > 0 ? 'Update Cart' : 'Add to Cart') : 'Out of Stock'}
                 </button>
 
-                {/* Wishlist Button on Desktop */}
+                {/* Wishlist Button */}
                 <button 
                   onClick={handleWishlistToggle}
-                  className="hidden sm:flex w-12 h-12 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 rounded-xl items-center justify-center text-[#CE2028] hover:bg-red-50 dark:hover:bg-red-950/20 transition shadow-sm shrink-0 bg-transparent"
+                  className="w-12 h-12 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 rounded-xl flex items-center justify-center text-[#CE2028] hover:bg-red-50 dark:hover:bg-red-950/20 transition shadow-sm shrink-0"
                   title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
                 >
                   <Heart size={20} className={isWishlisted ? 'fill-current' : ''} />
@@ -218,6 +212,7 @@ export default function QuickViewModal() {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

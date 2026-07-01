@@ -146,7 +146,7 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
       {/* Top Bar */}
       <div className="bg-[#8F1D1D] text-white text-sm py-2">
         <div className="container-custom flex justify-between items-center gap-1.5 md:gap-4">
