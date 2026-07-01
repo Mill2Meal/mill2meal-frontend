@@ -76,7 +76,7 @@ export default function QuickViewModal() {
       <div className="absolute inset-0" onClick={closeQuickView} />
       
       {/* Modal Box */}
-      <div className="relative bg-white dark:bg-gray-900 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col md:flex-row transform transition-all duration-300 animate-scaleUp max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-y-visible">
+      <div className="relative bg-white dark:bg-gray-900 w-[min(calc(100vw-2rem),672px)] rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col md:flex-row transform transition-all duration-300 animate-scaleUp max-h-[90dvh] overflow-y-auto">
         {/* Close Button */}
         <button 
           onClick={closeQuickView}
@@ -150,29 +150,39 @@ export default function QuickViewModal() {
           <div>
             <div className="mb-4 text-left">
               <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Quantity</p>
-              <div className="flex items-center gap-3">
-                {/* Quantity Selector */}
-                <div className="flex items-center border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-850 rounded-xl overflow-hidden h-12 shrink-0">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  {/* Quantity Selector */}
+                  <div className="flex items-center border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-850 rounded-xl overflow-hidden h-12 flex-1 sm:flex-initial justify-between sm:w-32">
+                    <button 
+                      onClick={() => {
+                        const nextQty = Math.max(1, localQty - 1);
+                        setLocalQty(nextQty);
+                        if (quantityInCart > 0) updateQuantity(id, nextQty);
+                      }}
+                      className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition border-none bg-transparent"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <span className="w-10 text-center font-bold text-gray-805 dark:text-gray-250">{localQty}</span>
+                    <button 
+                      onClick={() => {
+                        const nextQty = localQty + 1;
+                        setLocalQty(nextQty);
+                        if (quantityInCart > 0) updateQuantity(id, nextQty);
+                      }}
+                      className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition border-none bg-transparent"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
+
+                  {/* Wishlist Button on Mobile */}
                   <button 
-                    onClick={() => {
-                      const nextQty = Math.max(1, localQty - 1);
-                      setLocalQty(nextQty);
-                      if (quantityInCart > 0) updateQuantity(id, nextQty);
-                    }}
-                    className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                    onClick={handleWishlistToggle}
+                    className="w-12 h-12 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 rounded-xl flex sm:hidden items-center justify-center text-[#CE2028] hover:bg-red-50 dark:hover:bg-red-950/20 transition shadow-sm shrink-0 bg-transparent"
                   >
-                    <Minus size={16} />
-                  </button>
-                  <span className="w-10 text-center font-bold text-gray-800 dark:text-gray-250">{localQty}</span>
-                  <button 
-                    onClick={() => {
-                      const nextQty = localQty + 1;
-                      setLocalQty(nextQty);
-                      if (quantityInCart > 0) updateQuantity(id, nextQty);
-                    }}
-                    className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
-                  >
-                    <Plus size={16} />
+                    <Heart size={20} className={isWishlisted ? 'fill-current' : ''} />
                   </button>
                 </div>
 
@@ -182,15 +192,15 @@ export default function QuickViewModal() {
                     addToCart(quickViewProduct, localQty);
                   }}
                   disabled={!isAvailable}
-                  className="flex-1 h-12 bg-[#CE2028] hover:bg-[#A8161D] disabled:bg-gray-200 dark:disabled:bg-gray-850 dark:disabled:text-gray-600 text-white font-bold px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:cursor-not-allowed text-sm"
+                  className="flex-1 h-12 bg-[#CE2028] hover:bg-[#A8161D] disabled:bg-gray-200 dark:disabled:bg-gray-850 dark:disabled:text-gray-600 text-white font-bold px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:cursor-not-allowed text-sm border-none w-full sm:w-auto"
                 >
                   <ShoppingBag size={18} /> {isAvailable ? (quantityInCart > 0 ? 'Update Cart' : 'Add to Cart') : 'Out of Stock'}
                 </button>
 
-                {/* Wishlist Button */}
+                {/* Wishlist Button on Desktop */}
                 <button 
                   onClick={handleWishlistToggle}
-                  className="w-12 h-12 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 rounded-xl flex items-center justify-center text-[#CE2028] hover:bg-red-50 dark:hover:bg-red-950/20 transition shadow-sm shrink-0"
+                  className="hidden sm:flex w-12 h-12 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 rounded-xl items-center justify-center text-[#CE2028] hover:bg-red-50 dark:hover:bg-red-950/20 transition shadow-sm shrink-0 bg-transparent"
                   title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
                 >
                   <Heart size={20} className={isWishlisted ? 'fill-current' : ''} />

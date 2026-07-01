@@ -152,7 +152,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100">
+      <div className="w-[min(calc(100vw-2rem),440px)] bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100">
         <div className="text-center mb-8">
           <div className="w-12 h-12 bg-[#CE2028] rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-white font-bold text-xl">M</span>

@@ -47,7 +47,7 @@ export default function LocationModal() {
       />
 
       {/* Modal Card */}
-      <div className="relative bg-white dark:bg-[#0c1424] w-full max-w-md rounded-3xl shadow-2xl p-8 overflow-hidden transform transition-all duration-300 scale-100 border border-gray-100 dark:border-gray-800 text-center">
+      <div className="relative bg-white dark:bg-[#0c1424] w-[min(calc(100vw-2rem),440px)] max-h-[90dvh] rounded-3xl shadow-2xl p-6 sm:p-8 overflow-y-auto transform transition-all duration-300 scale-100 border border-gray-100 dark:border-gray-800 text-center flex flex-col justify-between">
         {/* Close Button */}
         <button
           onClick={handleNotNow}
