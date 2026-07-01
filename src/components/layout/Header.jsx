@@ -147,10 +147,10 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       {/* Top Bar */}
       <div className="bg-[#8F1D1D] text-white text-sm py-2">
-        <div className="container-custom flex flex-col md:flex-row justify-between items-center gap-1.5 md:gap-4">
-          <div className="flex flex-row items-center justify-center gap-4 text-[11px] md:text-sm">
-            <span className="flex items-center gap-1"><MapPin size={14} /> Free delivery on orders above ₹499</span>
-            <span className="flex items-center gap-1"><Phone size={14} /> +91 90595 03227</span>
+        <div className="container-custom flex justify-between items-center gap-1.5 md:gap-4">
+          <div className="flex flex-row items-center justify-between w-full md:w-auto md:justify-start gap-4 text-[11px] md:text-sm whitespace-nowrap">
+            <span className="flex items-center gap-1">📍 Free Delivery ₹499+</span>
+            <span className="flex items-center gap-1">📞 +91 90595 03227</span>
           </div>
           <div className="flex items-center gap-4 hidden md:flex">
             <Link to="/stores" className="hover:text-primary-200 transition">Store Locator</Link>
@@ -162,14 +162,14 @@ export default function Header() {
 
       {/* Main Header */}
       <div className="container-custom py-4">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-2 md:gap-4">
           {/* Mobile Menu Button */}
           <button onClick={() => setIsMenuOpen(true)} className="lg:hidden p-2">
             <Menu size={24} />
           </button>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-4 select-none">
+          <Link to="/" className="flex items-center gap-1.5 md:gap-4 select-none">
           <div className="w-9 h-9 md:w-16 md:h-16 bg-[#CE2028] rounded-xl flex items-center justify-center p-1 overflow-hidden shrink-0">
             <img
             src={branding.logoLight}
@@ -228,13 +228,13 @@ export default function Header() {
           </form>
 
           {/* Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 md:gap-3">
             {/* Theme Toggle Switcher */}
             <div className="relative">
               <button 
                 type="button"
                 onClick={() => setShowThemeMenu(!showThemeMenu)} 
-                className="p-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition"
+                className="p-1.5 md:p-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition"
                 title="Change Theme"
               >
                 {theme === 'dark' ? <Moon size={22} /> : <Sun size={22} />}
@@ -259,7 +259,7 @@ export default function Header() {
               )}
             </div>
 
-            <button onClick={() => setIsSearchOpen(true)} className="lg:hidden p-2 text-gray-700">
+            <button onClick={() => setIsSearchOpen(true)} className="lg:hidden p-1.5 text-gray-700">
               <Search size={22} />
             </button>
             <Link to={localStorage.getItem('accessToken') ? "/account" : "/login"} className="hidden sm:flex items-center gap-2 p-2 text-gray-700 hover:text-primary-600 transition">
@@ -276,11 +276,11 @@ export default function Header() {
                 )}
               </Link>
             )}
-            <Link to="/wishlist" className="flex items-center gap-2 p-2 text-gray-700 hover:text-[#CE2028] transition" title="Wishlist">
+            <Link to="/wishlist" className="hidden lg:flex items-center gap-2 p-2 text-gray-700 hover:text-[#CE2028] transition" title="Wishlist">
               <Heart size={22} />
               <span className="hidden md:inline text-sm font-medium">Wishlist</span>
             </Link>
-            <Link to="/cart" className="relative flex items-center gap-2 p-2 text-gray-700 hover:text-primary-600 transition">
+            <Link to="/cart" className="relative flex items-center gap-2 p-1.5 md:p-2 text-gray-700 hover:text-primary-600 transition">
               <ShoppingCart size={22} />
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#CE2028] text-white text-xs rounded-full flex items-center justify-center font-bold">
@@ -303,7 +303,7 @@ export default function Header() {
                 <li key={cat.slug} className="py-2 shrink-0">
                   <Link
                     to={`/category/${cat.slug}`}
-                    className={`block px-4 py-2 text-xs font-semibold rounded-full border transition-all duration-300 transform whitespace-nowrap shadow-sm hover:shadow hover:-translate-y-0.5 ${
+                    className={`block px-3 md:px-4 py-2 text-xs font-semibold rounded-full border transition-all duration-300 transform whitespace-nowrap shadow-sm hover:shadow hover:-translate-y-0.5 ${
                       isActive 
                         ? 'bg-gradient-to-br from-[#CE2028] to-[#E63B44] text-white border-[#CE2028] shadow-md dark:from-[#CE2028] dark:to-[#B51622]' 
                         : 'bg-gradient-to-br from-red-50/50 to-rose-100/40 border-red-100/50 text-red-900 hover:from-red-100 hover:to-rose-200/80 hover:border-[#CE2028]/35 dark:from-[#1E0B0C]/40 dark:to-[#160E12]/30 dark:border-red-950/50 dark:text-gray-300 dark:hover:from-[#2B0A0C] dark:hover:to-[#1E0A0C] dark:hover:border-[#CE2028]/45'
@@ -317,7 +317,7 @@ export default function Header() {
             <li className="py-2 shrink-0">
               <Link 
                 to="/monthly-essentials" 
-                className={`block px-4 py-2 text-xs font-bold rounded-full border transition-all duration-300 transform whitespace-nowrap shadow-sm hover:shadow hover:-translate-y-0.5 ${
+                className={`block px-3 md:px-4 py-2 text-xs font-bold rounded-full border transition-all duration-300 transform whitespace-nowrap shadow-sm hover:shadow hover:-translate-y-0.5 ${
                   location.pathname === '/monthly-essentials'
                     ? 'bg-gradient-to-br from-[#CE2028] to-[#E63B44] text-white border-[#CE2028] shadow-md dark:from-[#CE2028] dark:to-[#B51622]'
                     : 'bg-gradient-to-br from-red-50/50 to-rose-100/40 border-red-100/50 text-[#CE2028] hover:from-red-100 hover:to-rose-200/80 hover:border-[#CE2028]/35 dark:from-[#1E0B0C]/40 dark:to-[#160E12]/30 dark:border-red-950/50 dark:text-[#CE2028] dark:hover:from-[#2B0A0C] dark:hover:to-[#1E0A0C]'
@@ -329,7 +329,7 @@ export default function Header() {
             <li className="py-2 shrink-0">
               <Link 
                 to="/subscriptions" 
-                className={`block px-4 py-2 text-xs font-bold rounded-full border transition-all duration-300 transform whitespace-nowrap shadow-sm hover:shadow hover:-translate-y-0.5 ${
+                className={`block px-3 md:px-4 py-2 text-xs font-bold rounded-full border transition-all duration-300 transform whitespace-nowrap shadow-sm hover:shadow hover:-translate-y-0.5 ${
                   location.pathname === '/subscriptions'
                     ? 'bg-gradient-to-br from-[#CE2028] to-[#E63B44] text-white border-[#CE2028] shadow-md dark:from-[#CE2028] dark:to-[#B51622]'
                     : 'bg-gradient-to-br from-red-50/50 to-rose-100/40 border-red-100/50 text-[#CE2028] hover:from-red-100 hover:to-rose-200/80 hover:border-[#CE2028]/35 dark:from-[#1E0B0C]/40 dark:to-[#160E12]/30 dark:border-red-950/50 dark:text-[#CE2028] dark:hover:from-[#2B0A0C] dark:hover:to-[#1E0A0C]'

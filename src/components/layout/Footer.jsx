@@ -1,7 +1,33 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MapPin, Phone, Mail, Instagram, Facebook, Twitter, Youtube } from 'lucide-react'
+import { api } from '../../lib/api'
 
 export default function Footer() {
+  const [branding, setBranding] = useState({
+    brandName: 'MILLTOMEAL',
+    tagline: 'Fresh from Mill to Table',
+    logoLight: `${import.meta.env.BASE_URL}logo.jpg`,
+    primaryColor: '#CE2028',
+    secondaryColor: '#F97316',
+  })
+
+  useEffect(() => {
+    api.branding.get()
+      .then(res => {
+        if (res) {
+          setBranding({
+            brandName: res.brandName || 'MILLTOMEAL',
+            tagline: res.tagline || 'Fresh from Mill to Table',
+            logoLight: res.logoLight || `${import.meta.env.BASE_URL}logo.jpg`,
+            primaryColor: res.primaryColor || '#CE2028',
+            secondaryColor: res.secondaryColor || '#F97316',
+          })
+        }
+      })
+      .catch(err => console.error(err))
+  }, [])
+
   return (
     <footer className="bg-gray-900 text-gray-300">
       {/* WhatsApp CTA */}
@@ -27,22 +53,66 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="MillToMeal Logo" className="w-10 h-10 rounded-xl object-cover shadow-md" />
-              <span className="text-xl font-logo font-bold">
-                <span className="text-[#CE2028]">MILL</span>
-                <span className="text-white">To</span>
-                <span className="text-[#CE2028]">MEAL</span>
-              </span>
+            <Link to="/" className="flex items-center gap-1.5 md:gap-4 select-none mb-4">
+              <div className="w-9 h-9 md:w-16 md:h-16 bg-[#CE2028] rounded-xl flex items-center justify-center p-1 overflow-hidden shrink-0">
+                <img
+                  src={branding.logoLight}
+                  alt={`${branding.brandName} Logo`}
+                  className="max-h-full max-w-full object-contain scale-[1.35]"
+                  style={{ imageRendering: "auto" }}
+                />
+              </div>
+              <div className="flex flex-col justify-center w-auto select-none pl-0">
+                <h1 className="text-[16px] md:text-[17px] font-bold uppercase leading-none font-logo tracking-[0.02em]">
+                  <span className="text-[#CE2028]">MILL</span>
+                  <span className="text-white">To</span>
+                  <span className="text-[#CE2028]">MEAL</span>
+                </h1>
+                <p className="mt-[4px] text-[8px] md:text-[10.2px] font-semibold leading-none text-[#CE2028] tracking-[0.01em]">
+                  {branding.tagline}
+                </p>
+              </div>
             </Link>
             <p className="text-sm text-gray-400 mb-4 leading-relaxed">
               Premium quality grains, pulses, oils and spices delivered fresh from the mill to your table. Trusted by 50,000+ families.
             </p>
             <div className="flex gap-3">
-              <a href="#" className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"><Instagram size={18} /></a>
-              <a href="#" className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"><Facebook size={18} /></a>
-              <a href="#" className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"><Twitter size={18} /></a>
-              <a href="#" className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"><Youtube size={18} /></a>
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"
+              >
+                <Facebook size={18} />
+              </a>
+              <a
+                href="https://x.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+                className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"
+              >
+                <Twitter size={18} />
+              </a>
+              <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition"
+              >
+                <Youtube size={18} />
+              </a>
             </div>
           </div>
 
@@ -97,14 +167,8 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
-        <div className="container-custom py-4 flex flex-col md:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-gray-500">&copy; 2024 MillToMeal. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/100px-Visa_Inc._logo.svg.png" alt="Visa" className="h-5 opacity-60" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/100px-Mastercard-logo.svg.png" alt="Mastercard" className="h-5 opacity-60" />
-            <span className="text-xs text-gray-500 border border-gray-700 px-2 py-0.5 rounded">UPI</span>
-            <span className="text-xs text-gray-500 border border-gray-700 px-2 py-0.5 rounded">COD</span>
-          </div>
+        <div className="container-custom py-6 flex items-center justify-center">
+          <p className="text-xs text-gray-500 text-center">&copy; 2026 MillToMeal. All rights reserved.</p>
         </div>
       </div>
     </footer>

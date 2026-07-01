@@ -15,7 +15,7 @@ export default function FloatingCartBar() {
   const displayItems = cartItems.slice(0, 3)
 
   return (
-    <div className="fixed bottom-20 lg:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-xl bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2xl shadow-xl p-3.5 flex items-center justify-between gap-4 transition-all duration-500 animate-slideUp">
+    <div className="fixed bottom-24 left-4 right-4 w-auto lg:bottom-6 lg:left-0 lg:right-0 lg:mx-auto lg:w-[92%] lg:max-w-xl z-40 bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2xl shadow-xl p-3.5 flex items-center justify-between gap-4 transition-all duration-500 animate-slideUp">
       {/* Product Thumbnails */}
       <div className="flex items-center gap-3">
         <div className="flex -space-x-3 overflow-hidden">

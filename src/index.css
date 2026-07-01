@@ -5,9 +5,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   body {
     @apply font-body text-gray-800 bg-white antialiased dark:bg-[#090d16] dark:text-gray-100 transition-colors duration-300;
+    overflow-x: hidden;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading dark:text-white;
@@ -132,6 +134,9 @@
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-800;
+  }
+  .font-logo {
+    font-family: 'Poppins', sans-serif;
   }
 }
 
@@ -284,7 +289,7 @@
   }
   .category-nav a {
     font-size: 13px !important;
-    padding: 0.375rem 0.75rem !important;
+    padding: 0.375rem 0.625rem !important;
   }
 }
 
@@ -320,11 +325,11 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translate(-50%, 20px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
 }
 
