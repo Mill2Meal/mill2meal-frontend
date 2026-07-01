@@ -152,13 +152,13 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-12 h-12 bg-[#CE2028] rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-white font-bold text-xl">M</span>
           </div>
           <h2 className="text-2xl font-heading font-bold text-gray-900">
-            {step === 'register' ? 'Complete Profile' : 'Welcome to MillToMeal'}
+            {step === 'register' ? 'Complete Profile' : 'Welcome to Welcome to MillToMeal'}
           </h2>
           <p className="text-gray-500 mt-2 text-sm">
             {step === 'request' && `Enter your ${loginMethod === 'mobile' ? 'mobile number' : 'email address'} to login or register`}
@@ -181,7 +181,7 @@ export default function LoginPage() {
                 onClick={() => { setLoginMethod('mobile'); setError(''); }}
                 className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${
                   loginMethod === 'mobile'
-                    ? 'bg-white text-gray-900 shadow-sm'
+                    ? 'bg-white text-gray-900 shadow-sm font-bold'
                     : 'text-gray-500 hover:text-gray-800'
                 }`}
               >
@@ -192,7 +192,7 @@ export default function LoginPage() {
                 onClick={() => { setLoginMethod('email'); setError(''); }}
                 className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${
                   loginMethod === 'email'
-                    ? 'bg-white text-gray-900 shadow-sm'
+                    ? 'bg-white text-gray-900 shadow-sm font-bold'
                     : 'text-gray-500 hover:text-gray-800'
                 }`}
               >
@@ -204,7 +204,7 @@ export default function LoginPage() {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number</label>
                 <div className="flex gap-2">
-                  <span className="bg-gray-100 border border-gray-300 rounded-lg px-3 py-3 text-gray-600 font-medium flex items-center justify-center">+91</span>
+                  <span className="bg-gray-100 border border-gray-300 rounded-lg w-12 shrink-0 py-3 text-gray-600 font-medium flex items-center justify-center">+91</span>
                   <input
                     type="tel"
                     maxLength={10}

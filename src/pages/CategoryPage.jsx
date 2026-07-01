@@ -138,22 +138,22 @@ export default function CategoryPage() {
 
       <div className="container-custom py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-2xl md:text-3xl font-heading font-bold text-gray-900">{category?.categoryName || 'All Products'}</h1>
-            <p className="text-gray-500 text-sm mt-1">{sortedAndFiltered.length} products available</p>
+            <h1 className="text-xl md:text-3xl font-heading font-bold text-gray-900">{category?.categoryName || 'All Products'}</h1>
+            <p className="text-gray-500 text-xs md:text-sm mt-0.5">{sortedAndFiltered.length} products available</p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
               onClick={() => setShowFilters(true)}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:border-primary-500 transition"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-300 rounded-xl text-sm font-medium hover:border-[#CE2028] transition bg-white dark:bg-gray-800 border-none shadow-sm"
             >
               <SlidersHorizontal size={16} /> Filters
             </button>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:outline-none focus:border-primary-500 bg-white dark:bg-gray-800"
+              className="flex-1 sm:flex-initial px-4 py-2.5 border border-gray-300 rounded-xl text-sm font-medium focus:outline-none focus:border-[#CE2028] bg-white dark:bg-gray-800"
             >
               <option value="popular">Sort</option>
               <option value="price-low">Price: Low to High</option>
