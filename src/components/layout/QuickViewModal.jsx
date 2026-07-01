@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { X, Star, Heart, Plus, Minus, ShoppingBag, ShieldCheck, RefreshCw, Award } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
@@ -9,6 +9,12 @@ export default function QuickViewModal() {
   const { quickViewProduct, closeQuickView, addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
   const { cartItems, addToCart, updateQuantity } = useCart()
   const navigate = useNavigate()
+
+  const id = quickViewProduct?.productId || quickViewProduct?.id || null
+  const inCartItem = id ? cartItems.find(item => item.id === id) : null
+  const quantityInCart = inCartItem ? inCartItem.quantity : 0
+
+  const [localQty, setLocalQty] = useState(1)
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -26,9 +32,16 @@ export default function QuickViewModal() {
     }
   }, [quickViewProduct])
 
+  useEffect(() => {
+    if (quantityInCart > 0) {
+      setLocalQty(quantityInCart)
+    } else {
+      setLocalQty(1)
+    }
+  }, [quantityInCart, quickViewProduct])
+
   if (!quickViewProduct) return null
 
-  const id = quickViewProduct.productId || quickViewProduct.id
   const name = quickViewProduct.productName || quickViewProduct.name
   const imageUrl = resolveProductImage(quickViewProduct)
   const unit = quickViewProduct.packSize ? `${quickViewProduct.packSize} ${quickViewProduct.unitOfMeasure || ''}` : (quickViewProduct.unit || '1 Unit')
@@ -39,9 +52,10 @@ export default function QuickViewModal() {
   const discount = quickViewProduct.discount || (originalPrice > price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0)
   const isWishlisted = isInWishlist(id)
   
-  const inCartItem = cartItems.find(item => item.id === id)
-  const quantityInCart = inCartItem ? inCartItem.quantity : 0
-  const isAvailable = quickViewProduct.availabilityStatus !== 'Out Of Stock'
+  const availableStock = quickViewProduct.inventories 
+    ? quickViewProduct.inventories.reduce((sum, inv) => sum + (inv.onHandQuantity - (inv.reservedQuantity || 0)), 0)
+    : 1;
+  const isAvailable = availableStock > 0;
 
   const handleWishlistToggle = () => {
     if (isWishlisted) {
@@ -92,13 +106,6 @@ export default function QuickViewModal() {
               <span className="text-xs font-bold text-[#CE2028] bg-red-50 dark:bg-red-950/30 px-2.5 py-1 rounded-full uppercase tracking-wider">
                 {quickViewProduct.brand || '100% Organic'}
               </span>
-              <button 
-                onClick={handleWishlistToggle}
-                className="text-[#CE2028] hover:scale-110 transition duration-300 p-1"
-                title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
-              >
-                <Heart size={24} className={isWishlisted ? 'fill-current' : ''} />
-              </button>
             </div>
 
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white leading-snug mb-1">{name}</h3>
@@ -141,33 +148,54 @@ export default function QuickViewModal() {
           </div>
 
           <div>
-            {/* CTA action container */}
-            <div className="flex items-center gap-4 mb-4">
-              {quantityInCart > 0 ? (
-                <div className="flex items-center border border-gray-200 dark:border-gray-850 rounded-xl overflow-hidden shadow-sm">
+            <div className="mb-4 text-left">
+              <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Quantity</p>
+              <div className="flex items-center gap-3">
+                {/* Quantity Selector */}
+                <div className="flex items-center border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-850 rounded-xl overflow-hidden h-12 shrink-0">
                   <button 
-                    onClick={() => updateQuantity(id, quantityInCart - 1)}
-                    className="p-3 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+                    onClick={() => {
+                      const nextQty = Math.max(1, localQty - 1);
+                      setLocalQty(nextQty);
+                      if (quantityInCart > 0) updateQuantity(id, nextQty);
+                    }}
+                    className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
                   >
                     <Minus size={16} />
                   </button>
-                  <span className="px-4 font-bold text-gray-800 dark:text-gray-200">{quantityInCart}</span>
+                  <span className="w-10 text-center font-bold text-gray-800 dark:text-gray-250">{localQty}</span>
                   <button 
-                    onClick={() => updateQuantity(id, quantityInCart + 1)}
-                    className="p-3 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+                    onClick={() => {
+                      const nextQty = localQty + 1;
+                      setLocalQty(nextQty);
+                      if (quantityInCart > 0) updateQuantity(id, nextQty);
+                    }}
+                    className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
                   >
                     <Plus size={16} />
                   </button>
                 </div>
-              ) : (
+
+                {/* Add to Cart Button */}
                 <button
-                  onClick={() => addToCart(quickViewProduct, 1)}
+                  onClick={() => {
+                    addToCart(quickViewProduct, localQty);
+                  }}
                   disabled={!isAvailable}
-                  className="flex-1 bg-[#CE2028] hover:bg-[#A8161D] disabled:bg-gray-200 text-white font-bold py-3.5 px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:cursor-not-allowed"
+                  className="flex-1 h-12 bg-[#CE2028] hover:bg-[#A8161D] disabled:bg-gray-200 dark:disabled:bg-gray-850 dark:disabled:text-gray-600 text-white font-bold px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:cursor-not-allowed text-sm"
                 >
-                  <ShoppingBag size={18} /> {isAvailable ? 'Add to Cart' : 'Out of Stock'}
+                  <ShoppingBag size={18} /> {isAvailable ? (quantityInCart > 0 ? 'Update Cart' : 'Add to Cart') : 'Out of Stock'}
                 </button>
-              )}
+
+                {/* Wishlist Button */}
+                <button 
+                  onClick={handleWishlistToggle}
+                  className="w-12 h-12 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 rounded-xl flex items-center justify-center text-[#CE2028] hover:bg-red-50 dark:hover:bg-red-950/20 transition shadow-sm shrink-0"
+                  title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                >
+                  <Heart size={20} className={isWishlisted ? 'fill-current' : ''} />
+                </button>
+              </div>
             </div>
 
             {/* View Full Details */}

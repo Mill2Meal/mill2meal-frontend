@@ -3,10 +3,12 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Search, ShoppingCart, User, Menu, X, MapPin, Phone, Bell, Sun, Moon, Monitor, Heart } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
 import { useTheme } from '../../context/ThemeContext'
+import { useLocationContext } from '../../context/LocationContext'
 import { api } from '../../lib/api'
 
 export default function Header() {
   const location = useLocation()
+  const { location: userLocation, setShowModal, setModalState } = useLocationContext()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -194,6 +196,30 @@ export default function Header() {
              </div>
                   </Link>
 
+            {/* Desktop Deliver to Location Selector */}
+            <div className="hidden lg:flex items-center">
+              <button
+                onClick={() => {
+                  setModalState('prompt')
+                  setShowModal(true)
+                }}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700/80 border border-gray-255 dark:border-gray-700 rounded-2xl transition text-left cursor-pointer shrink-0 border-none shadow-sm hover:shadow"
+              >
+                <MapPin size={18} className="text-[#CE2028]" />
+                <div className="flex flex-col text-[10px] md:text-[11px] leading-tight">
+                  <span className="text-gray-400 dark:text-gray-400 font-medium">Deliver to</span>
+                  <span className="font-bold text-gray-800 dark:text-white truncate max-w-[120px] sm:max-w-[150px] mt-0.5">
+                    {userLocation ? (
+                      userLocation.area 
+                        ? `${userLocation.area}, ${userLocation.city}` 
+                        : userLocation.city || userLocation.pincode
+                    ) : 'Select Area'}
+                  </span>
+                </div>
+                <span className="text-gray-400 dark:text-gray-450 text-[8px] ml-1">▼</span>
+              </button>
+            </div>
+
           {/* Desktop Search with Autocomplete */}
           <form onSubmit={handleSearch} onClick={(e) => e.stopPropagation()} className="hidden lg:flex flex-1 max-w-xl mx-8 relative">
             <div className="relative w-full">
@@ -291,6 +317,32 @@ export default function Header() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* Mobile Location Bar */}
+      <div className="lg:hidden bg-gray-50 dark:bg-[#111827] border-t border-b border-gray-100 dark:border-gray-800 py-2.5 px-4 flex items-center justify-between">
+        <button
+          onClick={() => {
+            setModalState('prompt')
+            setShowModal(true)
+          }}
+          className="flex items-center gap-2 text-left w-full justify-between bg-transparent border-none p-0 cursor-pointer"
+        >
+          <div className="flex items-center gap-2">
+            <MapPin size={16} className="text-[#CE2028]" />
+            <div className="flex items-center gap-1 text-[11px] font-semibold text-gray-700 dark:text-gray-250">
+              <span className="text-gray-400 dark:text-gray-500 font-medium">Deliver to -</span>
+              <span className="truncate max-w-[200px]">
+                {userLocation ? (
+                  userLocation.area 
+                    ? `${userLocation.area}, ${userLocation.city}` 
+                    : userLocation.city || userLocation.pincode
+                ) : 'Select Area'}
+              </span>
+            </div>
+          </div>
+          <span className="text-gray-450 dark:text-gray-500 text-[8px]">▼</span>
+        </button>
       </div>
 
       {/* Desktop/Mobile Navigation */}
@@ -401,13 +453,25 @@ export default function Header() {
           <div className="absolute inset-0 bg-black/50" onClick={() => setIsMenuOpen(false)} />
           <div className="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-xl overflow-y-auto">
             <div className="p-4 border-b flex items-center justify-between">
-              <Link to="/" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
-                <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="MillToMeal Logo" className="w-8 h-8 rounded-lg object-cover shadow-sm" />
-                <span className="font-logo font-bold text-lg select-none">
-                  <span className="text-[#CE2028]">MILL</span>
-                  <span className="text-black dark:text-white">To</span>
-                  <span className="text-[#CE2028]">MEAL</span>
-                </span>
+              <Link to="/" className="flex items-center gap-2 select-none" onClick={() => setIsMenuOpen(false)}>
+                <div className="w-9 h-9 bg-[#CE2028] rounded-xl flex items-center justify-center p-1 overflow-hidden shrink-0">
+                  <img
+                    src={branding.logoLight}
+                    alt={`${branding.brandName} Logo`}
+                    className="max-h-full max-w-full object-contain scale-[1.35]"
+                    style={{ imageRendering: "auto" }}
+                  />
+                </div>
+                <div className="flex flex-col justify-center w-auto select-none pl-0 text-left">
+                  <h1 className="text-[16px] font-bold uppercase leading-none font-logo tracking-[0.02em]">
+                    <span className="text-[#CE2028]">MILL</span>
+                    <span className="text-black dark:text-white">To</span>
+                    <span className="text-[#CE2028]">MEAL</span>
+                  </h1>
+                  <p className="mt-[4px] text-[8px] font-semibold leading-none text-[#CE2028] tracking-[0.01em]">
+                    {branding.tagline}
+                  </p>
+                </div>
               </Link>
               <button onClick={() => setIsMenuOpen(false)} className="p-2"><X size={24} /></button>
             </div>

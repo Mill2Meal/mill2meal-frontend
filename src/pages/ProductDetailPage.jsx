@@ -191,22 +191,49 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Quantity & Add to Cart */}
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition dark:text-white"><Minus size={16} /></button>
-                <span className="w-12 text-center font-semibold dark:text-white">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition dark:text-white"><Plus size={16} /></button>
+            <div className="flex items-center gap-3 mb-6">
+              {/* Quantity Selector */}
+              <div className="flex items-center border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-850 rounded-xl overflow-hidden h-12 shrink-0">
+                <button 
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))} 
+                  className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition flex items-center justify-center"
+                >
+                  <Minus size={16} />
+                </button>
+                <span className="w-10 text-center font-bold text-gray-800 dark:text-gray-250">{quantity}</span>
+                <button 
+                  onClick={() => setQuantity(quantity + 1)} 
+                  className="px-3 h-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition flex items-center justify-center"
+                >
+                  <Plus size={16} />
+                </button>
               </div>
-              <button
-                onClick={handleAddToCart}
-                disabled={product.availabilityStatus === 'Out Of Stock'}
-                className="flex-1 bg-[#CE2028] hover:bg-[#A8161D] text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition duration-300 shadow-md"
-              >
-                <ShoppingCart size={20} /> {product.availabilityStatus === 'Out Of Stock' ? 'Out of Stock' : 'Add to Cart'}
-              </button>
+
+              {/* Add to Cart / Out of Stock Button */}
+              {(() => {
+                const availableStock = product.inventories 
+                  ? product.inventories.reduce((sum, inv) => sum + (inv.onHandQuantity - (inv.reservedQuantity || 0)), 0)
+                  : 1;
+                const isOutOfStock = availableStock <= 0;
+                return (
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={isOutOfStock}
+                    className="flex-1 h-12 bg-[#CE2028] hover:bg-[#A8161D] disabled:bg-gray-200 dark:disabled:bg-gray-850 dark:disabled:text-gray-600 text-white font-bold px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:cursor-not-allowed text-sm"
+                  >
+                    <ShoppingCart size={18} /> {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+                  </button>
+                );
+              })()}
+
+              {/* Wishlist Button */}
               <button
                 onClick={handleWishlistToggle}
-                className={`p-3.5 border-2 rounded-xl transition-all duration-300 ${isWishlisted ? 'border-[#CE2028] bg-red-50 dark:bg-red-950/20 text-[#CE2028]' : 'border-gray-250 dark:border-gray-700 text-gray-500 hover:text-gray-800 hover:border-gray-350'}`}
+                className={`w-12 h-12 border rounded-xl flex items-center justify-center transition shadow-sm shrink-0 ${
+                  isWishlisted 
+                    ? 'border-[#CE2028] bg-red-50 dark:bg-red-950/20 text-[#CE2028]' 
+                    : 'border-gray-200 dark:border-gray-850 text-gray-500 hover:text-gray-800 hover:border-gray-350 bg-white dark:bg-gray-850'
+                }`}
                 title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
               >
                 <Heart size={20} className={isWishlisted ? 'fill-current text-[#CE2028]' : ''} />

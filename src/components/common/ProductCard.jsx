@@ -93,18 +93,33 @@ export default function ProductCard({ product }) {
           <span className="text-xs text-gray-400">({reviews})</span>
         </div>
         <div className="flex items-center justify-between mt-auto">
-          <div>
-            <span className="text-lg font-bold text-gray-900 dark:text-gray-100">₹{price}</span>
+          <div className="flex items-baseline gap-2.5">
+            <span className="text-lg font-extrabold text-gray-900 dark:text-gray-100">₹{price}</span>
             {originalPrice > price && (
-              <span className="text-sm text-gray-400 line-through ml-2">₹{originalPrice}</span>
+              <span className="text-sm text-gray-400 line-through">₹{originalPrice}</span>
             )}
           </div>
-          <button
-            onClick={handleAddToCart}
-            className="w-10 h-10 bg-[#CE2028] text-white rounded-full flex items-center justify-center hover:bg-[#A8161D] transition shadow-md hover:shadow-lg"
-          >
-            <Plus size={20} />
-          </button>
+          {(() => {
+            const availableStock = product.inventories 
+              ? product.inventories.reduce((sum, inv) => sum + (inv.onHandQuantity - (inv.reservedQuantity || 0)), 0)
+              : 1;
+            const isOutOfStock = availableStock <= 0;
+            if (isOutOfStock) {
+              return (
+                <span className="px-3.5 py-2 bg-gray-150 dark:bg-gray-800 text-gray-500 dark:text-gray-400 rounded-xl text-xs font-bold select-none border border-gray-200 dark:border-gray-700 shrink-0">
+                  Out of Stock
+                </span>
+              );
+            }
+            return (
+              <button
+                onClick={handleAddToCart}
+                className="w-10 h-10 bg-[#CE2028] text-white rounded-full flex items-center justify-center hover:bg-[#A8161D] transition shadow-md hover:shadow-lg shrink-0"
+              >
+                <Plus size={20} />
+              </button>
+            );
+          })()}
         </div>
       </div>
     </div>

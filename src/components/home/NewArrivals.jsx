@@ -45,7 +45,7 @@ export default function NewArrivals() {
             <h2 className="section-title">New Arrivals</h2>
             <p className="section-subtitle">Latest additions to our collection</p>
           </div>
-          <Link to="/search?q=" className="hidden sm:flex items-center gap-1 text-primary-600 font-semibold hover:gap-2 transition-all">
+          <Link to="/search?filter=newarrivals" className="hidden sm:flex items-center gap-1 text-primary-600 font-semibold hover:gap-2 transition-all">
             View All <ArrowRight size={18} />
           </Link>
         </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Home, Grid3X3, ShoppingCart, User, Heart, Bell } from 'lucide-react'
+import { Home, Grid3X3, ShoppingCart, User, Heart, Bell, Package } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
 import { api } from '../../lib/api'
 
@@ -32,7 +32,7 @@ export default function MobileBottomNav() {
     { icon: ShoppingCart, label: 'Cart', path: '/cart', badge: cartCount },
     isLoggedIn 
       ? { icon: Bell, label: 'Notifications', path: '/account/notifications', badge: unreadCount }
-      : { icon: Heart, label: 'Subscriptions', path: '/subscriptions' },
+      : { icon: Package, label: 'Subscriptions', path: '/subscriptions' },
     isLoggedIn 
       ? { icon: User, label: 'Account', path: '/account' }
       : { icon: User, label: 'Login', path: '/login' },

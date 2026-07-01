@@ -118,14 +118,24 @@ export async function apiFetch(path, options = {}) {
     }
     
     let friendlyMessage = body.message || `API Error: ${response.statusText}`;
-    if (friendlyMessage.toLowerCase().includes('internal server error')) {
-      friendlyMessage = 'We are experiencing temporary server issues. Please try again in a few moments.';
+    const lowerMessage = friendlyMessage.toLowerCase();
+
+    if (
+      lowerMessage.includes('validation failed') ||
+      lowerMessage.includes('uuid') ||
+      lowerMessage.includes('prisma') ||
+      lowerMessage.includes('internal server error') ||
+      response.status === 500
+    ) {
+      if (path.includes('serviceability') || path.includes('pincode') || path.includes('geocode')) {
+        friendlyMessage = 'Unable to check delivery. Please try again.';
+      } else {
+        friendlyMessage = 'An unexpected error occurred. Please try again.';
+      }
     } else if (response.status === 403) {
       friendlyMessage = 'You do not have access to this resource.';
     } else if (response.status === 404) {
       friendlyMessage = 'The requested resource could not be found.';
-    } else if (response.status === 500) {
-      friendlyMessage = 'An unexpected server error occurred. Please try again later.';
     }
 
     throw new ApiError(
@@ -287,6 +297,8 @@ export const api = {
     list: (params) => apiFetch(`/stores${params ? `?${params}` : ''}`),
     serviceability: (pincode) =>
       apiFetch(`/stores/serviceability?pincode=${pincode}`),
+    reverseGeocode: (lat, lng) =>
+      apiFetch(`/stores/reverse-geocode?lat=${lat}&lng=${lng}`),
     get: (id) => apiFetch(`/stores/${id}`),
   },
   baskets: {

@@ -53,7 +53,7 @@ export default function CategoriesSection() {
           <div className="text-center mt-10">
             <Link
               to="/categories"
-              className="inline-flex items-center justify-center px-6 py-3 border border-primary text-primary hover:bg-primary hover:text-white font-medium rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
+              className="inline-flex items-center justify-center px-6 py-3 border border-[#CE2028] text-[#CE2028] bg-white hover:bg-[#CE2028] hover:text-white font-semibold rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
             >
               View All Categories &rarr;
             </Link>

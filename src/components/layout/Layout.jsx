@@ -3,6 +3,7 @@ import Footer from './Footer'
 import MobileBottomNav from './MobileBottomNav'
 import QuickViewModal from './QuickViewModal'
 import FloatingCartBar from './FloatingCartBar'
+import LocationModal from './LocationModal'
 
 export default function Layout({ children }) {
   return (
@@ -13,6 +14,7 @@ export default function Layout({ children }) {
       <MobileBottomNav />
       <FloatingCartBar />
       <QuickViewModal />
+      <LocationModal />
     </div>
   )
 }

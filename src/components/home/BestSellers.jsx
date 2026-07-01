@@ -44,7 +44,7 @@ export default function BestSellers() {
             <h2 className="section-title">Best Sellers</h2>
             <p className="section-subtitle">Loved by 50,000+ families</p>
           </div>
-          <Link to="/search?q=" className="hidden sm:flex items-center gap-1 text-primary-600 font-semibold hover:gap-2 transition-all">
+          <Link to="/search?filter=bestsellers" className="hidden sm:flex items-center gap-1 text-primary-600 font-semibold hover:gap-2 transition-all">
             View All <ArrowRight size={18} />
           </Link>
         </div>
@@ -54,7 +54,7 @@ export default function BestSellers() {
           ))}
         </div>
         <div className="mt-8 text-center sm:hidden">
-          <Link to="/search?q=" className="btn-outline inline-flex items-center gap-2">
+          <Link to="/search?filter=bestsellers" className="btn-outline inline-flex items-center gap-2">
             View All Products <ArrowRight size={18} />
           </Link>
         </div>

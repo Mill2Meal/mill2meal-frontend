@@ -146,16 +146,16 @@ export default function CategoryPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowFilters(true)}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:border-primary-500 transition lg:hidden"
+              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:border-primary-500 transition"
             >
               <SlidersHorizontal size={16} /> Filters
             </button>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:outline-none focus:border-primary-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:outline-none focus:border-primary-500 bg-white dark:bg-gray-800"
             >
-              <option value="popular">Most Popular</option>
+              <option value="popular">Sort</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
               <option value="rating">Highest Rated</option>

@@ -36,6 +36,7 @@ export default function CategoriesPage() {
       document.head.appendChild(metaDescription)
     }
     metaDescription.setAttribute(
+      'content',
       'Explore all product categories at MillToMeal. From fresh flour and grains to premium cold-pressed oils, view all categories.'
     )
 

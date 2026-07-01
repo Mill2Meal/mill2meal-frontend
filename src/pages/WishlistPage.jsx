@@ -55,7 +55,11 @@ export default function WishlistPage() {
               const price = parseFloat(item.salePrice || item.price)
               const originalPrice = parseFloat(item.mrp || item.originalPrice || price)
               const image = resolveProductImage(item)
-              const inStock = item.availabilityStatus !== 'Out Of Stock'
+              const inStock = item.availabilityStatus !== 'Out Of Stock' && 
+                              item.availabilityStatus !== 'Out of Stock' && 
+                              !(item.inventories && 
+                                item.inventories.length > 0 && 
+                                item.inventories.reduce((sum, inv) => sum + (inv.onHandQuantity - (inv.reservedQuantity || 0)), 0) <= 0);
 
               return (
                 <div key={id} className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 hover:bg-gray-50/50 dark:hover:bg-gray-800/10 transition-colors">

@@ -333,3 +333,17 @@
   }
 }
 
+@keyframes infinite-loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-infinite-loading {
+  animation: infinite-loading 1.5s infinite ease-in-out;
+}
+
+
