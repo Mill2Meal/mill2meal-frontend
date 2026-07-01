@@ -48,7 +48,7 @@ export default function LocationModal() {
       />
 
       {/* Modal Card */}
-      <div className="relative bg-white dark:bg-[#0c1424] w-full max-w-[440px] max-h-[90dvh] rounded-3xl shadow-2xl p-6 sm:p-8 overflow-y-auto transform transition-all duration-300 scale-100 border border-gray-100 dark:border-gray-800 text-center flex flex-col justify-between">
+      <div className="relative bg-white dark:bg-[#0c1424] w-[calc(100vw-32px)] max-w-[420px] max-h-[90dvh] rounded-3xl shadow-2xl p-6 sm:p-8 overflow-y-auto transform transition-all duration-300 scale-100 border border-gray-100 dark:border-gray-800 text-center flex flex-col justify-between">
         {/* Close Button */}
         <button
           onClick={handleNotNow}
@@ -190,27 +190,27 @@ export default function LocationModal() {
                   <XCircle className="text-red-500 w-10 h-10" />
                 </div>
 
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
                   Currently we don't deliver here
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
+                <p className="text-sm leading-6 text-gray-500 dark:text-gray-400 mb-6 px-1">
                   We are expanding fast! Join our waitlist or enter another pincode to check.
                 </p>
 
                 {/* Pincode Entry Form */}
                 <form onSubmit={handleManualCheck} className="w-full mb-6">
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-2 w-full">
                     <input
                       type="text"
                       value={manualPincode}
                       onChange={(e) => setManualPincode(e.target.value.replace(/\D/g, '').slice(0, 6))}
                       placeholder="Enter 6-digit pincode"
-                      className="flex-1 px-4 py-3 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-xl focus:outline-none focus:border-[#CE2028] text-gray-800 dark:text-white text-sm"
+                      className="flex-1 min-w-0 px-4 py-3 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-xl focus:outline-none focus:border-[#CE2028] text-gray-800 dark:text-white text-sm"
                     />
                     <button
                       type="submit"
                       disabled={loading || manualPincode.length !== 6}
-                      className="px-5 bg-[#CE2028] text-white font-semibold rounded-xl hover:bg-[#B51622] transition disabled:bg-gray-300 border-none flex items-center justify-center"
+                      className="w-[96px] sm:w-[110px] shrink-0 bg-[#CE2028] text-white font-semibold rounded-xl hover:bg-[#B51622] transition disabled:bg-gray-300 border-none flex items-center justify-center py-3"
                     >
                       {loading ? <Loader2 size={16} className="animate-spin" /> : 'Check'}
                     </button>
