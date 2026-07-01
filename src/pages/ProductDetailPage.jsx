@@ -105,7 +105,7 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div className="pb-20 lg:pb-0">
+    <div className="pt-[205px] pb-20 lg:pt-0 lg:pb-0">
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4">
         <div className="container-custom">

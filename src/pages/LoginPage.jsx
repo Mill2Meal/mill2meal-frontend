@@ -151,14 +151,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 pt-[210px] pb-12 lg:pt-12">
       <div className="w-[min(calc(100vw-2rem),440px)] bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100">
         <div className="text-center mb-8">
           <div className="w-12 h-12 bg-[#CE2028] rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-white font-bold text-xl">M</span>
           </div>
           <h2 className="text-2xl font-heading font-bold text-gray-900">
-            {step === 'register' ? 'Complete Profile' : 'Welcome to Welcome to MillToMeal'}
+            {step === 'register' ? 'Complete Profile' : 'Welcome to MillToMeal'}
           </h2>
           <p className="text-gray-500 mt-2 text-sm">
             {step === 'request' && `Enter your ${loginMethod === 'mobile' ? 'mobile number' : 'email address'} to login or register`}

@@ -83,7 +83,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="pb-20 lg:pb-0 bg-gray-50/50 min-h-screen">
+    <div className="pt-[205px] pb-20 lg:pt-0 lg:pb-0 bg-gray-50/50 min-h-screen">
       <div className="container-custom py-8">
         <h1 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 mb-8">Shopping Cart ({cartItems.length} items)</h1>
 
